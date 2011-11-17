@@ -2,6 +2,8 @@ Mailgun
 =========
 This gem allows for idiomatic Mailgun usage from within ruby. Mailgun is a kickass email-as-a-service that lets you use email as if it made sense. Check it out at http://mailgun.net/
 
+The official gem repo is at https://github.com/Bushido/mailgun
+
 Mailgun exposes the following resources:
 
   * Routes
