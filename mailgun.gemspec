@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/mailgun/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Akash Manohar J"]
@@ -13,5 +12,5 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.name          = "mailgun"
   gem.require_paths = ["lib"]
-  gem.version       = Mailgun::VERSION
+  gem.version       = "0.0.1"
 end

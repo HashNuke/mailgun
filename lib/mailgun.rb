@@ -1,4 +1,9 @@
 require "rest-client"
+require "json"
+
+def Mailgun(options)
+  Mailgun.new(options)
+end
 
 class Mailgun
 
@@ -6,7 +11,6 @@ class Mailgun
                 :api_version,
                 :use_https,
                 :mailgun_host,
-                :mailbox_domain,
                 :use_test_mode
 
 
@@ -16,7 +20,6 @@ class Mailgun
     @use_https = options.fetch(:use_https) { true }
     @mailgun_host = options.fetch(:mailgun_host) {"api.mailgun.net"}
     @api_key =  options.fetch(:api_key) { nil }
-    @mailbox_domain = options.fetch(:mailbox_domain) { nil }
     @test_mode = options.fetch(:test_mode) { false }
 	end
 
@@ -32,35 +35,42 @@ class Mailgun
     # :track BOOL
   end
 
-
   # Mailboxes
-  def list_mailboxes(domain)
+  def list_mailboxes(options)
+    domain = options.fetch(:domain) { raise ArgumentError }
     api_url = "#{base_url}/#{domain}/mailboxes"
-    puts api_url
-    api_call = RestClient.get api_url
+    json_response = RestClient.get api_url
+    JSON(json_response)
   end
   
+  # TODO dont ask for domain option
   def create_mailbox(options)
-    mailbox_name = options.fetch(:name) { raise ArgumentError }
-    password = options.fetch(:password) { raise ArgumentError }
-    domain = options.fetch(:domain) { raise ArgumentError }
-    full_mailbox_name = "#{name}@#{domain}"
-    api_call = RestClient.post "#{Mailgun.base_url}/#{domain}/mailboxes", :mailbox => full_mailbox_name, :password => password
-  end
+    mailbox_name = options.fetch(:name)   { raise ArgumentError }
+    password  = options.fetch(:password)  { raise ArgumentError }
+    domain = options.fetch(:domain)       { raise ArgumentError }
+    full_mailbox_name = "#{mailbox_name}@#{domain}"
+    
+    json_response = RestClient.post "#{base_url}/#{domain}/mailboxes",
+                                    :mailbox => full_mailbox_name,
+                                    :password => password
+    JSON(json_response)
+    end
 
   def update_mailbox_password(options)
     mailbox_name = options.fetch(:name) {raise ArgumentError }
-    domain = options.fetch(:domain) {raise ArgumentError }
+    domain = options.fetch(:domain)     {raise ArgumentError }
     password = options.fetch(:password) {raise ArgumentError }
 
-    api_call = RestClient.put "#{Mailgun.base_url}/#{domain}/mailboxes/#{mailbox_name}", :password => password
+    json_response = RestClient.put "#{base_url}/#{domain}/mailboxes/#{mailbox_name}", :password => password
+    JSON(json_response)
   end
 
   def delete_mailbox(options)
     mailbox_name = options.fetch(:name) {raise ArgumentError }
-    domain = options.fetch(:domain) {raise ArgumentError }
+    domain = options.fetch(:domain)     {raise ArgumentError }
 
-    api_call = RestClient.delete "#{Mailgun.base_url}/#{domain}/mailboxes/#{mailbox_name}"
+    json_response = RestClient.delete "#{base_url}/#{domain}/mailboxes/#{mailbox_name}"
+    JSON(json_response)
   end
 
   def base_url

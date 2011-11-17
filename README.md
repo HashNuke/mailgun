@@ -10,7 +10,7 @@ Mailgun
 						   :password => "password"
 	
 	# list mailboxes
-	mailgun.list_messages "product_support"
+	mailgun.list_mailboxes "product_support"
 
 	# delete a mailbox
 	mailbox.delete_mailbox :mailbox => "product_support@nice-guy.com"
