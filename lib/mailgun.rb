@@ -73,6 +73,7 @@ class Mailgun
     JSON(json_response)
   end
 
+  private
   def base_url
     if @use_https
       "https://api:#{api_key}@#{mailgun_host}/#{api_version}"

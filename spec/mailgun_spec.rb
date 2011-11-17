@@ -26,14 +26,14 @@ describe Mailgun do
 	describe "base_url" do
 		it "should return https url if use_https is true" do
 			mailgun = Mailgun(@sample_options)
-			mailgun.base_url.should == "https://api:#{mailgun.api_key}@#{mailgun.mailgun_host}/#{mailgun.api_version}"
+			mailgun.send(:base_url).should == "https://api:#{mailgun.api_key}@#{mailgun.mailgun_host}/#{mailgun.api_version}"
 		end
 	end
 
 	describe "list_mailboxes" do
 		it "should make a get request with the right params" do
 			RestClient.should_receive(:get)
-								.with("#{@mailgun.base_url}/#{@mailbox_options[:domain]}/mailboxes").and_return("{}")
+								.with("#{@mailgun.send(:base_url)}/#{@mailbox_options[:domain]}/mailboxes").and_return("{}")
 			@mailgun.list_mailboxes :domain => @mailbox_options[:domain]
 		end
 	end
@@ -41,7 +41,7 @@ describe Mailgun do
 	describe "create mailbox" do
 		it "should make a post request with the right params"	do
 			RestClient.should_receive(:post)
-								.with("#{@mailgun.base_url}/#{@mailbox_options[:domain]}/mailboxes",
+								.with("#{@mailgun.send(:base_url)}/#{@mailbox_options[:domain]}/mailboxes",
 											:mailbox  => @mailbox_options[:name]+"@"+@mailbox_options[:domain],
 											:password => @mailbox_options[:password])
 								.and_return({})
@@ -55,7 +55,7 @@ describe Mailgun do
 	describe "update mailbox password" do
 		it "should make a put request with the right params" do
 			RestClient.should_receive(:put)
-								.with("#{@mailgun.base_url}/#{@mailbox_options[:domain]}/mailboxes/#{@mailbox_options[:name]}",
+								.with("#{@mailgun.send(:base_url)}/#{@mailbox_options[:domain]}/mailboxes/#{@mailbox_options[:name]}",
 											:password => @mailbox_options[:password])
 								.and_return({})
 
@@ -68,7 +68,7 @@ describe Mailgun do
 	describe "delete mailbox" do
 		it "should make a put request with the right params" do
 			RestClient.should_receive(:delete)
-								.with("#{@mailgun.base_url}/#{@mailbox_options[:domain]}/mailboxes/#{@mailbox_options[:name]}")
+								.with("#{@mailgun.send(:base_url)}/#{@mailbox_options[:domain]}/mailboxes/#{@mailbox_options[:name]}")
 								.and_return({})
 
 			@mailgun.delete_mailbox :name => @mailbox_options[:name],
