@@ -2,15 +2,6 @@ require "rest-client"
 
 class Mailgun
 
-  @api_version = "v2"
-  @api_user = "api"
-  @use_https = true
-  @mailgun_host = "api.mailgun.net"
-  @api_key = nil
-  @mailbox_domain = nil
-  @use_test_mode = false
-
-
   attr_accessor :api_key,
                 :api_version,
                 :use_https,
@@ -19,17 +10,26 @@ class Mailgun
                 :use_test_mode
 
 
-	def initialize(api_key=nil)
-		@api_key = api_key if @api_key.nil?
-    puts @api_key
+	def initialize(options)
+		@api_key = options.fetch(:api_key) { nil }
+    @api_version = options.fetch(:api_version) { "v2" }
+    @use_https = options.fetch(:use_https) { true }
+    @mailgun_host = options.fetch(:mailgun_host) {"api.mailgun.net"}
+    @api_key =  options.fetch(:api_key) { nil }
+    @mailbox_domain = options.fetch(:mailbox_domain) { nil }
+    @test_mode = options.fetch(:test_mode) { false }
 	end
 
   # send email
   def send_email()
     # TODO with the following options
-    # :with_attachment (ok thats says it all)
+    # :from, :to, :cc, :bcc, :subject, :text, :html 
+    # :with_attachment
+    # :with_attachments
     # :at for delayed delivery time option
     # :in_test_mode BOOL. override the @use_test_mode setting
+    # :tags to add tags to the email
+    # :track BOOL
   end
 
 
@@ -64,10 +64,10 @@ class Mailgun
   end
 
   def base_url
-    if @use_https == true
-      "https://#{@api_user}:#{@api_key}@#{@mailgun_host}/#{@api_version}"
+    if @use_https
+      "https://api:#{api_key}@#{mailgun_host}/#{api_version}"
     else
-      "http://#{@api_user}:#{@api_key}@#{@mailgun_host}/#{@api_version}"
+      "http://api:#{api_key}@#{mailgun_host}/#{api_version}"
     end
   end
 
