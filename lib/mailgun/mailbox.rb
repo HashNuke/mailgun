@@ -10,7 +10,10 @@ module Mailgun
     # * domain the domain for which all mailboxes will listed
     def list(domain)
       response = submit :get, mailbox_url(domain)
-      response["items"].collect {|item| item["mailbox"]}
+
+      if response
+        response["items"].collect {|item| item["mailbox"]}
+      end
     end
     
 
@@ -47,7 +50,13 @@ module Mailgun
 
     # Submits the API call to the Mailgun server
     def submit(method, url, parameters={})
-      JSON(RestClient.send(method, url, parameters))
+      begin
+        return JSON(RestClient.send(method, url, parameters))
+      rescue => e
+        unless e.http_body.nil?
+          raise Mailgun::Error.new(JSON(e.http_body)["message"])
+        end
+      end
     end
   end
 end
