@@ -53,9 +53,16 @@ module Mailgun
       begin
         return JSON(RestClient.send(method, url, parameters))
       rescue => e
-        unless e.http_body.nil?
-          raise Mailgun::Error.new(JSON(e.http_body)["message"])
+        error_message = nil
+        if e.http_body
+          begin
+            error_message = JSON(e.http_body)["message"]
+          rescue
+            raise e
+          end
+          raise Mailgun::Error.new(error_message)
         end
+        raise e
       end
     end
   end
