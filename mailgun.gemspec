@@ -13,4 +13,6 @@ Gem::Specification.new do |gem|
   gem.name          = "mailgun"
   gem.require_paths = ["lib"]
   gem.version       = "0.0.3"
+  
+  gem.add_dependency(%q<rest-client>, [">= 0"])
 end
