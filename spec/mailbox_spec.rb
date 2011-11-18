@@ -14,7 +14,7 @@ describe Mailgun::Mailbox do
 
   describe "list mailboxes" do
     it "should make a get request with the right params" do
-      sample_response = "{\n  \"total_count\": 1,\n  \"items\": [\n  {\n  \"size_bytes\": 0,\n  \"mailbox\": \"postmaster@bsample.mailgun.com\"\n    }\n  ]\n}"
+      sample_response = "{\n  \"total_count\": 1,\n  \"items\": [\n  {\n  \"size_bytes\": 0,\n  \"mailbox\": \"postmaster@bsample.mailgun.org\"\n    }\n  ]\n}"
       RestClient.should_receive(:get).with("#{@mailgun.send(:base_url)}/#{@mailbox_options[:domain]}/mailboxes", {}).and_return(sample_response)
 
       @mailgun.mailboxes.list @mailbox_options[:domain]
