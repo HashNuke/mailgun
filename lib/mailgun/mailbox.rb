@@ -9,7 +9,7 @@ module Mailgun
     # List all mailboxes for a given domain
     # * domain the domain for which all mailboxes will listed
     def list(domain)
-      response = Mailgun::Base.submit :get, mailbox_url(domain)
+      response = Mailgun.submit :get, mailbox_url(domain)
 
       if response
         response["items"].collect {|item| item["mailbox"]}
@@ -19,7 +19,7 @@ module Mailgun
 
     # Creates a mailbox on the Mailgun server with the given password
     def create(address, password)
-      Mailgun::Base.submit :post, mailbox_url(address.split("@").last), :mailbox =>  address,
+      Mailgun.submit :post, mailbox_url(address.split("@").last), :mailbox =>  address,
       :password => password
     end
 
@@ -28,7 +28,7 @@ module Mailgun
     def update_password(address, password)
       mailbox_name, domain = address.split("@")
 
-      Mailgun::Base.submit :put, mailbox_url(domain, mailbox_name), :password => password
+      Mailgun.submit :put, mailbox_url(domain, mailbox_name), :password => password
     end
 
 
@@ -36,7 +36,7 @@ module Mailgun
     def destroy(address)
       mailbox_name, domain = address.split("@")
 
-      Mailgun::Base.submit :delete,  mailbox_url(domain, mailbox_name)
+      Mailgun.submit :delete,  mailbox_url(domain, mailbox_name)
     end
 
 

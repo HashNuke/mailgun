@@ -30,23 +30,24 @@ module Mailgun
     def mailboxes
       @mailboxes ||= Mailgun::Mailbox.new(self)
     end
-    
-    # Submits the API call to the Mailgun server
-    def self.submit(method, url, parameters={})
-      begin
-        return JSON(RestClient.send(method, url, parameters))
-      rescue => e
-        error_message = nil
-        if e.http_body
-          begin
-            error_message = JSON(e.http_body)["message"]
-          rescue
-            raise e
-          end
-          raise Mailgun::Error.new(error_message)
+  end
+
+
+  # Submits the API call to the Mailgun server
+  def self.submit(method, url, parameters={})
+    begin
+      return JSON(RestClient.send(method, url, parameters))
+    rescue => e
+      error_message = nil
+      if e.http_body
+        begin
+          error_message = JSON(e.http_body)["message"]
+        rescue
+          raise e
         end
-        raise e
+        raise Mailgun::Error.new(error_message)
       end
+      raise e
     end
   end
 end
