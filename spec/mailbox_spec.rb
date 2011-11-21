@@ -13,18 +13,18 @@ describe Mailgun::Mailbox do
   end
 
   describe "list mailboxes" do
-    it "should make a get request with the right params" do
-      sample_response = "{\n  \"total_count\": 1,\n  \"items\": [\n  {\n  \"size_bytes\": 0,\n  \"mailbox\": \"postmaster@bsample.mailgun.org\"\n    }\n  ]\n}"
-      RestClient.should_receive(:get).with("#{@mailgun.send(:base_url)}/#{@mailbox_options[:domain]}/mailboxes", {}).and_return(sample_response)
+    it "should make a GET request with the right params" do
+      sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
+      RestClient.should_receive(:get).with("#{@mailgun.mailboxes.send(:mailbox_url, @mailbox_options[:domain])}", {}).and_return(sample_response)
 
       @mailgun.mailboxes.list @mailbox_options[:domain]
     end
   end
 
   describe "create mailbox" do
-    it "should make a post request with the right params"	do
+    it "should make a POST request with the right params"	do
       RestClient.should_receive(:post)
-        .with("#{@mailgun.send(:base_url)}/#{@mailbox_options[:domain]}/mailboxes",
+        .with("#{@mailgun.mailboxes.send(:mailbox_url, @mailbox_options[:domain])}",
         :mailbox  => @mailbox_options[:email],
         :password => @mailbox_options[:password])
         .and_return({})
@@ -33,10 +33,10 @@ describe Mailgun::Mailbox do
     end
   end
 
-  describe "update mailbox password" do
-    it "should make a put request with the right params" do
+  describe "update mailbox" do
+    it "should make a PUT request with the right params" do
       RestClient.should_receive(:put)
-        .with("#{@mailgun.send(:base_url)}/#{@mailbox_options[:domain]}/mailboxes/#{@mailbox_options[:name]}",
+        .with("#{@mailgun.mailboxes.send(:mailbox_url, @mailbox_options[:domain], @mailbox_options[:name])}",
         :password => @mailbox_options[:password])
         .and_return({})
 
@@ -46,9 +46,9 @@ describe Mailgun::Mailbox do
   end
 
   describe "destroy mailbox" do
-    it "should make a put request with the right params" do
+    it "should make a DELETE request with the right params" do
       RestClient.should_receive(:delete)
-        .with("#{@mailgun.send(:base_url)}/#{@mailbox_options[:domain]}/mailboxes/#{@mailbox_options[:name]}", {})
+        .with("#{@mailgun.mailboxes.send(:mailbox_url, @mailbox_options[:domain], @mailbox_options[:name])}", {})
         .and_return({})
 
       @mailgun.mailboxes.destroy @mailbox_options[:email]

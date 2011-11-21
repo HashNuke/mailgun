@@ -5,7 +5,7 @@ module Mailgun
     def initialize(mailgun)
       @mailgun = mailgun
     end
-
+    
     # List all mailboxes for a given domain
     # * domain the domain for which all mailboxes will listed
     def list(domain)

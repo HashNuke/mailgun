@@ -30,6 +30,10 @@ module Mailgun
     def mailboxes
       @mailboxes ||= Mailgun::Mailbox.new(self)
     end
+
+    def routes
+      @routes ||= Mailgun::Route.new(self)
+    end
   end
 
 
