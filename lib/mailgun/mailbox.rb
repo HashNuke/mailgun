@@ -5,17 +5,21 @@ module Mailgun
     def initialize(mailgun)
       @mailgun = mailgun
     end
-
+    
     # List all mailboxes for a given domain
     # * domain the domain for which all mailboxes will listed
     def list(domain)
-      submit :get, mailbox_url(domain)
+      response = Mailgun.submit :get, mailbox_url(domain)
+
+      if response
+        response["items"].collect {|item| item["mailbox"]}
+      end
     end
     
 
     # Creates a mailbox on the Mailgun server with the given password
     def create(address, password)
-      submit :post, mailbox_url(address.split("@").last), :mailbox =>  address,
+      Mailgun.submit :post, mailbox_url(address.split("@").last), :mailbox =>  address,
       :password => password
     end
 
@@ -24,7 +28,7 @@ module Mailgun
     def update_password(address, password)
       mailbox_name, domain = address.split("@")
 
-      submit :put, mailbox_url(domain, mailbox_name), :password => password
+      Mailgun.submit :put, mailbox_url(domain, mailbox_name), :password => password
     end
 
 
@@ -32,7 +36,7 @@ module Mailgun
     def destroy(address)
       mailbox_name, domain = address.split("@")
 
-      submit :delete,  mailbox_url(domain, mailbox_name)
+      Mailgun.submit :delete,  mailbox_url(domain, mailbox_name)
     end
 
 
@@ -43,10 +47,5 @@ module Mailgun
       "#{@mailgun.base_url}/#{domain}/mailboxes#{'/' + mailbox_name if mailbox_name}"
     end
 
-
-    # Submits the API call to the Mailgun server
-    def submit(method, url, parameters={})
-      JSON(RestClient.send(method, url, parameters))
-    end
   end
 end
