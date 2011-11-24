@@ -42,7 +42,7 @@ describe Mailgun::Base do
 
     describe "Mailgun#base_url" do
       it "should return https url if use_https is true" do
-      @mailgun.send(:base_url).should == "https://api:#{@mailgun.api_key}@#{@mailgun.mailgun_host}/#{@mailgun.api_version}"
+      @mailgun.base_url.should == "https://api:#{@mailgun.api_key}@#{@mailgun.mailgun_host}/#{@mailgun.api_version}"
       end
     end
 
