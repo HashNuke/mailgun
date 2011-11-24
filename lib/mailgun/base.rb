@@ -43,7 +43,7 @@ module Mailgun
       return JSON(RestClient.send(method, url, parameters))
     rescue => e
       error_message = nil
-      if e.http_body
+      if e.respond_to? http_body
         begin
           error_message = JSON(e.http_body)["message"]
         rescue
