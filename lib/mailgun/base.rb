@@ -11,7 +11,7 @@ module Mailgun
       Mailgun.protocol     = options.fetch(:protocol)     { "https"  }
       Mailgun.api_version  = options.fetch(:api_version)  { "v2"  }
       Mailgun.test_mode    = options.fetch(:test_mode)    { false }
-      Mailgun.api_key      = options.fetch(:api_key)      { raise ArgumentError(":api_key is a required argument to initialize Mailgun") }
+      Mailgun.api_key      = options.fetch(:api_key)      { raise ArgumentError.new(":api_key is a required argument to initialize Mailgun") if Mailgun.api_key.nil?}
     end
 
     # Returns the base url used in all Mailgun API calls

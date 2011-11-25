@@ -2,24 +2,37 @@ require 'spec_helper'
 
 describe Mailgun::Base do
 
-  before :each do
-    @mailgun = Mailgun({:api_key => "some-junk-string"})
+  it "should raise an error if the api_key has not been set" do
+    expect do
+      Mailgun()
+    end.should raise_error ArgumentError
+  end
+
+  it "can be called directly if the api_key has been set via Mailgun.configure" do
+    Mailgun.configure { |c| c.api_key = "some-junk-string" }
+    expect do
+      Mailgun()
+    end.should_not raise_error ArgumentError
+  end
+
+  it "can be instanced with the api_key as a param" do
+    expect do
+      Mailgun({:api_key => "some-junk-string"})
+    end.should_not raise_error ArgumentError
   end
 
   describe "Mailgun.new" do
     it "Mailgun() method should return a new Mailgun object" do
-      @mailgun.should be_kind_of(Mailgun::Base)
-    end
-
-    it "should use https by default" do
-      Mailgun.protocol.should == "https"
+      mailgun = Mailgun({:api_key => "some-junk-string"})
+      mailgun.should be_kind_of(Mailgun::Base)
     end
   end
 
-
-  
   describe "resources" do
-    
+    before :each do
+      @mailgun = Mailgun({:api_key => "some-junk-string"})
+    end
+
     it "Mailgun#mailboxes should return an instance of Mailgun::Mailbox" do
       @mailgun.mailboxes.should be_kind_of(Mailgun::Mailbox)
     end
@@ -32,6 +45,9 @@ describe Mailgun::Base do
 
   
   describe "internal helper methods" do
+    before :each do
+      @mailgun = Mailgun({:api_key => "some-junk-string"})
+    end
 
     describe "Mailgun#base_url" do
       it "should return https url if use_https is true" do
@@ -54,6 +70,9 @@ describe Mailgun::Base do
     describe "default settings" do
       it "api_version is v2" do
         Mailgun.api_version.should eql 'v2'
+      end
+      it "should use https by default" do
+        Mailgun.protocol.should == "https"
       end
       it "mailgun_host is 'api.mailgun.net'" do
         Mailgun.mailgun_host.should eql 'api.mailgun.net'
