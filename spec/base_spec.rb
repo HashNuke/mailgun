@@ -56,4 +56,21 @@ describe Mailgun::Base do
     end
     
   end
+
+  describe "configuration" do
+    before(:each) do
+      Mailgun.configure do |c|
+        c.api_key = 'some-api-key'
+        c.domain = 'some-domain'
+      end
+    end
+
+    it "allows me to set my API key easily" do
+      Mailgun.api_key.should eql 'some-api-key'
+    end
+
+    it "allows me to set my domain easily" do
+      Mailgun.domain.should eql 'some-domain'
+    end
+  end
 end

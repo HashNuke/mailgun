@@ -57,8 +57,8 @@ module Mailgun
                   :api_version,
                   :protocol,
                   :mailgun_host,
-                  :test_mode
-    attr_accessor :domain
+                  :test_mode,
+                  :domain
 
     def configure
       yield self
