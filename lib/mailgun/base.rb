@@ -57,6 +57,7 @@ module Mailgun
 
   class << self
     attr_accessor :api_key
+    attr_accessor :domain
 
     def configure
       yield self

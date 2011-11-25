@@ -8,6 +8,11 @@ describe Mailgun do
       end
       Mailgun.api_key.should eql 'some-api-key'
     end
-    it "allows me to set my domain easily"
+    it "allows me to set my domain easily" do
+      Mailgun.configure do |c|
+        c.domain = 'some-domain'
+      end
+      Mailgun.domain.should eql 'some-domain'
+    end
   end
 end
