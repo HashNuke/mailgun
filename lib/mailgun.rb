@@ -6,6 +6,6 @@ require "mailgun/base"
 require "mailgun/route"
 require "mailgun/mailbox"
 
-def Mailgun(options)
+def Mailgun(options={})
   Mailgun::Base.new(options)
 end
