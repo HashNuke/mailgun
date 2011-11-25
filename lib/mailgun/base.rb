@@ -49,8 +49,7 @@ module Mailgun
   end
 
   #
-  # Ideally this should be held in the root module Mailgun but atm there isn't
-  # one
+  # @TODO Create root module to give this a better home
   #
   class << self
     attr_accessor :api_key,
@@ -64,5 +63,6 @@ module Mailgun
       yield self
       true
     end
+    alias :config :configure
   end
 end

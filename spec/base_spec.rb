@@ -9,7 +9,7 @@ describe Mailgun::Base do
   end
 
   it "can be called directly if the api_key has been set via Mailgun.configure" do
-    Mailgun.configure { |c| c.api_key = "some-junk-string" }
+    Mailgun.config { |c| c.api_key = "some-junk-string" }
     expect do
       Mailgun()
     end.should_not raise_error ArgumentError
