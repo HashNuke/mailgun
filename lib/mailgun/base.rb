@@ -54,4 +54,13 @@ module Mailgun
       raise e
     end
   end
+
+  class << self
+    attr_accessor :api_key
+
+    def configure
+      yield self
+      true
+    end
+  end
 end
