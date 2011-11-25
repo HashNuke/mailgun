@@ -6,10 +6,10 @@ describe Mailgun::Base do
     @mailgun = Mailgun({:api_key => "some-junk-string"})
 
     @sample_options = {
-      :api_key 	    => @mailgun.api_key,
-      :api_version  => @mailgun.api_version,
-      :protocol     => @mailgun.protocol,
-      :mailgun_host => @mailgun.mailgun_host
+      :api_key 	    => Mailgun.api_key,
+      :api_version  => Mailgun.api_version,
+      :protocol     => Mailgun.protocol,
+      :mailgun_host => Mailgun.mailgun_host
     }
   end
 
@@ -19,7 +19,7 @@ describe Mailgun::Base do
     end
 
     it "should use https by default" do
-      @mailgun.protocol.should == "https"
+      Mailgun.protocol.should == "https"
     end
   end
 
@@ -42,7 +42,7 @@ describe Mailgun::Base do
 
     describe "Mailgun#base_url" do
       it "should return https url if use_https is true" do
-      @mailgun.base_url.should == "https://api:#{@mailgun.api_key}@#{@mailgun.mailgun_host}/#{@mailgun.api_version}"
+      @mailgun.base_url.should == "https://api:#{Mailgun.api_key}@#{Mailgun.mailgun_host}/#{Mailgun.api_version}"
       end
     end
 
