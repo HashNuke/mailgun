@@ -61,12 +61,31 @@ describe Mailgun::Base do
     before(:each) do
       Mailgun.configure do |c|
         c.api_key = 'some-api-key'
+        c.api_version = 'v2'
+        c.protocol = 'https'
+        c.mailgun_host = 'api.mailgun.net'
+        c.test_mode = false
         c.domain = 'some-domain'
       end
     end
 
     it "allows me to set my API key easily" do
       Mailgun.api_key.should eql 'some-api-key'
+    end
+
+    it "the api_version attribute" do
+      Mailgun.api_version.should eql 'v2'
+    end
+
+    it "the protocol attribute" do
+      Mailgun.protocol.should eql 'https'
+    end
+    
+    it "the mailgun_host attribute" do
+      Mailgun.mailgun_host.should eql 'api.mailgun.net'
+    end
+    it "the test_mode attribute" do
+      Mailgun.test_mode.should eql false
     end
 
     it "allows me to set my domain easily" do
