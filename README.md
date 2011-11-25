@@ -12,11 +12,13 @@ Mailgun exposes the following resources:
   * Messages
   * Mailboxes
 
-Currently the gem only exposes the Mailbox API, but patches are welcome (and easy!). 
+Currently the gem only exposes the Mailbox and Routes APIs, but patches are welcome (and easy!). 
 
 Usage
 =====
 We mimic the ActiveRecord-style interface.
+
+Mailboxes:
 
     # Initialize your Mailgun object:
     Mailgun.configure do |config|
@@ -25,18 +27,53 @@ We mimic the ActiveRecord-style interface.
 
     @mailgun = Mailgun()
 
-    # or alternatively use can do:
+    # or alternatively:
     @mailgun = Mailgun(:api_key => 'your-api-key')
     
     # Create a mailbox
-    @mailgun.mailbox.create "new-mailbox@your-domain.com", "password"
+    @mailgun.mailboxes.create "new-mailbox@your-domain.com", "password"
     
     # List all mailboxes that belong to a domain
     @mailgun.mailboxes.list "domain.com"
     
     # Destroy a mailbox (queue bond-villian laughter)
     # "I'm sorry Bond, it seems your mailbox will be... destroyed!"
-    @mailbox.mailboxes.destroy "bond@mi5.co.uk"
+    @mailbox.mailboxes.destroy "bond@mi6.co.uk"
+    
+Routes:
+
+    # Initialize your Mailgun object:
+    @mailgun = Mailgun(:api_key => 'your-api-key')
+
+    # Create a route
+    # Give it a human-readable description for later, a priority
+    # filters, and actions
+    @mailgun.routes.create "Description for the new route", 1,
+         [:match_recipient, "apowers@mi5.co.uk"],
+         [[:forward, "http://my-site.com/incoming-mail-route"],
+          [:stop]]
+    
+    # List all routes that belong to a domain
+    # limit the query to 100 routes starting from 0
+    @mailgun.routes.list 100, 0
+
+    # Get the details of a route via its id
+    @mailgun.routes.find "4e97c1b2ba8a48567f007fb6"
+
+    # Update a route via its id
+    # (all keys are optional)
+    @mailgun.routes.update "4e97c1b2ba8a48567f007fb6", {
+         :priority => 2,
+         :filter   => [:match_header, :subject, "*.support"],
+         :actions  => [[:forward, "http://new-site.com/incoming-emails"]]
+         }
+    
+    # Destroy a route via its id
+    @mailbox.routes.destroy "4e97c1b2ba8a48567f007fb6"
+
+Supported route filters are: `:match_header`, `:match_recipient`, and `:catch_all`
+Supported route actions are: `:forward`, and `:stop`
+
 
 Making Your Changes
 ===================
