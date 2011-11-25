@@ -15,4 +15,5 @@ Gem::Specification.new do |gem|
   gem.version       = "0.0.3"
   
   gem.add_dependency(%q<rest-client>, [">= 0"])
+  gem.add_dependency(%q<multimap>, [">= 0"])
 end

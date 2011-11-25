@@ -29,44 +29,39 @@ describe Mailgun::Route do
       RestClient.should_receive(:get)
         .with("#{@mailgun.routes.send(:route_url, @sample_route_id)}", {})
         .and_return("{\"route\": {\"id\": \"#{@sample_route_id}\" }}")
-      @mailgun.routes.get @sample_route_id
+      @mailgun.routes.find @sample_route_id
     end
   end
 
   describe "create route" do
     it "should make a POST request with the right params" do
-      options = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
+      options = {}
+
       options[:description] = "test_route"
-      options[:priority]   = 1
-      options[:expression] = "match_recipent(\"sample.mailgun.org\")"
-      options[:action]     = "forward(\"http://test-site.com\")"
-      
+      options[:priority]    = 1
+      options[:expression]  = [:match_recipient, "sample.mailgun.org"]
+      options[:action]      = [[:forward, "http://test-site.com"], [:stop]]
+
       RestClient.should_receive(:post)
-        .with("#{@mailgun.routes.send(:route_url)}", {
-          :description => options[:description],
-          :priority    => options[:priority],
-          :expression  => options[:expression],
-          :action      => options[:action]
-        })
+        .with(@mailgun.routes.send(:route_url), instance_of(Multimap))
         .and_return("{\"route\": {\"id\": \"@sample_route_id\"}}")
       
       @mailgun.routes.create(
         options[:description],
         options[:priority],
         options[:expression],
-        [options[:action]]
+        options[:action],
       )
     end
   end
 
   describe "update route" do
     it "should make a PUT request with the right params" do
-
-      options = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
+      options = {}
       options[:description] = "test_route"
       
       RestClient.should_receive(:put)
-        .with("#{@mailgun.routes.send(:route_url, @sample_route_id)}", options)
+        .with("#{@mailgun.routes.send(:route_url, @sample_route_id)}", instance_of(Multimap))
         .and_return("{\"id\": \"#{@sample_route_id}\"}")
       @mailgun.routes.update @sample_route_id, options
     end

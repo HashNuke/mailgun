@@ -6,55 +6,89 @@ module Mailgun
     end
     
     def list(limit=100, skip=0)
-      response = Mailgun.submit :get, route_url, :limit => limit, :skip => skip
-      if response
-        return (response["items"] || [])
-      end
+      Mailgun.submit(:get, route_url, :limit => limit, :skip => skip)["items"] || []
     end
 
-    def get(route_id)
-      response = Mailgun.submit :get, route_url(route_id)
-      response["route"] if response
+    def find(route_id)
+      Mailgun.submit(:get, route_url(route_id))["route"]
     end
 
-    def create(description, priority, expression, actions)
-      params = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) } 
-      params[:description] = description
-      params[:priority] = priority
-      params[:expression] = expression
-      
+    def create(description, priority, filter, actions)
+      data = ::Multimap.new
+
+      data['priority']    = priority
+      data['description'] = description
+      data['expression']  = build_filter(filter)
+
+      actions = build_actions(actions)
+
       actions.each do |action|
-        params[:action] = action
+        data['action'] = action
       end
-      
-      response = Mailgun.submit :post, route_url, params
-      response["route"]["id"] if response
+
+      # TODO: Raise an error or return false if unable to create route
+      Mailgun.submit(:post, route_url, data)["route"]["id"]
     end
 
     def update(route_id, params)
-      params_to_update = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) } 
+      data = ::Multimap.new
 
-      params_to_update[:priority] = params[:priority] if params.has_key?(:priority)
-      params_to_update[:description] = params[:description] if params.has_key?(:description)
-      params_to_update[:expression] = params[:expression] if params.has_key?(:expression)
+      ['priority', 'description'].each do |key|
+        data[key] = params[key] if params.has_key?(key)
+      end
 
-      if params.has_key?(:action)
-        params[:action].each do |action|
-          params_to_update[:action] = action
+      data['expression'] = build_filter(params['expression']) if params.has_key?('expression')
+
+      if params.has_key?('actions')
+        actions = build_actions(params['actions'])
+
+        actions.each do |action|
+          data['action'] = action
         end
       end
-      Mailgun.submit :put, route_url(route_id), params_to_update
+
+      Mailgun.submit(:put, route_url(route_id), data)
     end
     
     def destroy(route_id)
-      response = Mailgun.submit :delete, route_url(route_id)
-      response["id"] if response
+      Mailgun.submit(:delete, route_url(route_id))["id"]
     end
     
     private
 
     def route_url(route_id=nil)
       "#{@mailgun.base_url}/routes#{'/' + route_id if route_id}"
+    end
+
+    def build_actions(actions)
+      _actions = []
+
+      actions.each do |action|
+        case action.first.to_sym
+        when :forward
+          _actions << "forward(\"#{action.last}\")"
+        when :stop
+          _actions << "stop()"
+        else
+          raise Mailgun::Error.new("Unsupported action requested, see http://documentation.mailgun.net/user_manual.html#routes for a list of allowed actions")
+        end
+      end
+
+      _actions
+    end
+
+
+    def build_filter(filter)
+      case filter.first.to_sym
+      when :match_recipient
+        return "match_recipient('#{filter.last}')"
+      when :match_header
+        return "match_header('#{filter[1]}', '#{filter.last}')"
+      when :catch_all
+        return "catch_all()"
+      else
+        raise Mailgun::Error.new("Unsupported filter requested, see http://documentation.mailgun.net/user_manual.html#routes for a list of allowed filters")
+      end
     end
   end
 end
