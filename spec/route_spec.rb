@@ -67,6 +67,7 @@ describe Mailgun::Route do
       
       RestClient.should_receive(:put)
         .with("#{@mailgun.routes.send(:route_url, @sample_route_id)}", options)
+        .and_return("{\"id\": \"#{@sample_route_id}\"}")
       @mailgun.routes.update @sample_route_id, options
     end
   end
