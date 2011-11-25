@@ -25,7 +25,7 @@ We mimic the ActiveRecord-style interface.
     @mailgun.mailbox.create "new-mailbox@your-domain.com", "password"
     
     # List all mailboxes that belong to a domain
-    @mailgun.mailboxes.list domain.com"
+    @mailgun.mailboxes.list "domain.com"
     
     # Destroy a mailbox (queue bond-villian laughter)
     # "I'm sorry Bond, it seems your mailbox will be... destroyed!"
