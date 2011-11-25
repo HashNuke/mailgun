@@ -4,13 +4,6 @@ describe Mailgun::Base do
 
   before :each do
     @mailgun = Mailgun({:api_key => "some-junk-string"})
-
-    @sample_options = {
-      :api_key 	    => Mailgun.api_key,
-      :api_version  => Mailgun.api_version,
-      :protocol     => Mailgun.protocol,
-      :mailgun_host => Mailgun.mailgun_host
-    }
   end
 
   describe "Mailgun.new" do
@@ -59,12 +52,20 @@ describe Mailgun::Base do
 
   describe "configuration" do
     describe "default settings" do
-      it "api_key must be set"
-      it "protocol is https"
-      it "api_version is v2"
-      it "mailgun_host is 'api.mailgun.net'"
-      it "test_mode is false"
-      it "domain is not set"
+      it "api_version is v2" do
+        Mailgun.api_version.should eql 'v2'
+      end
+      it "mailgun_host is 'api.mailgun.net'" do
+        Mailgun.mailgun_host.should eql 'api.mailgun.net'
+      end
+
+      it "test_mode is false" do
+        Mailgun.test_mode.should eql false
+      end
+
+      it "domain is not set" do
+        Mailgun.domain.should be_nil
+      end
     end
 
     describe "setting configurations" do
