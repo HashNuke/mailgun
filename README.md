@@ -19,6 +19,13 @@ Usage
 We mimic the ActiveRecord-style interface.
 
     # Initialize your Mailgun object:
+    Mailgun.configure do |config|
+      config.api_key = 'your-api-key'
+    end
+
+    @mailgun = Mailgun()
+
+    # or alternatively use can do:
     @mailgun = Mailgun(:api_key => 'your-api-key')
     
     # Create a mailbox
