@@ -1,10 +1,7 @@
 ToDo
 =========
 
-Make config initializer actually work
-Allow for a default domain url so that arguments are optional
-Add bounces
-Add unsubscribes
+Mailgun() is overwriting api key. api key is not persisting
 Add complaints
 add failed
 add delivered
@@ -38,6 +35,7 @@ Mailboxes:
     # Initialize your Mailgun object:
     Mailgun.configure do |config|
       config.api_key = 'your-api-key'
+			config.domain  = 'your-mailgun-domain'
     end
 
     @mailgun = Mailgun()

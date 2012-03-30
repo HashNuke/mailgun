@@ -7,7 +7,7 @@ module Mailgun
     
     # List all mailboxes for a given domain
     # * domain the domain for which all mailboxes will listed
-    def list(domain)
+    def list(domain = Mailgun.domain)
       response = Mailgun.submit :get, bounce_url(domain)
 
       if response
@@ -19,6 +19,7 @@ module Mailgun
 
     # Helper method to generate the proper url for Mailgun mailbox API calls
     def bounce_url(domain, address=nil)
+      domain = Mailgun.domain if Mailgun.domain
       "#{@mailgun.base_url}/#{domain}/bounces#{'/' + address if address}"
     end
     

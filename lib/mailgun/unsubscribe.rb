@@ -7,7 +7,7 @@ module Mailgun
     
     # List all unsubscribes for a given domain
     # * domain the domain for which all unsubscribes will listed
-    def list(domain)
+    def list(domain = Mailgun.domain)
       response = Mailgun.submit :get, unsubscribe_url(domain)
 
       if response

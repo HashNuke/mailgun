@@ -7,11 +7,11 @@ module Mailgun
     # * API key and version
     # * Test mode - if enabled, doesn't actually send emails (see http://documentation.mailgun.net/user_manual.html#sending-in-test-mode)
     def initialize(options)
-      Mailgun.mailgun_host = options.fetch(:mailgun_host) {"api.mailgun.net"}
-      Mailgun.protocol     = options.fetch(:protocol)     { "https"  }
-      Mailgun.api_version  = options.fetch(:api_version)  { "v2"  }
-      Mailgun.test_mode    = options.fetch(:test_mode)    { false }
-      Mailgun.api_key      = options.fetch(:api_key)      { raise ArgumentError.new(":api_key is a required argument to initialize Mailgun") if Mailgun.api_key.nil?}
+      Mailgun.mailgun_host    = options.fetch(:mailgun_host)    {"api.mailgun.net"}
+      Mailgun.protocol        = options.fetch(:protocol)        { "https"  }
+      Mailgun.api_version     = options.fetch(:api_version)     { "v2"  }
+      Mailgun.test_mode       = options.fetch(:test_mode)       { false }
+      Mailgun.api_key         = options.fetch(:api_key)         { raise ArgumentError.new(":api_key is a required argument to initialize Mailgun") if Mailgun.api_key.nil?}
     end
 
     # Returns the base url used in all Mailgun API calls
@@ -24,6 +24,10 @@ module Mailgun
       @mailboxes ||= Mailgun::Mailbox.new(self)
     end
     
+    def routes
+      @routes ||= Mailgun::Route.new(self)
+    end
+    
     def bounces
       @bounces ||= Mailgun::Bounce.new(self)
     end
@@ -32,8 +36,8 @@ module Mailgun
       @unsubscribes ||= Mailgun::Unsubscribe.new(self)
     end
 
-    def routes
-      @routes ||= Mailgun::Route.new(self)
+    def complaints
+      @complaints || = Mailgun::Complaint.new(self)
     end
   end
 
