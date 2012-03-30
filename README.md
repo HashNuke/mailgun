@@ -2,7 +2,6 @@ ToDo
 =========
 
 Mailgun() is overwriting api key. api key is not persisting
-Add complaints
 add failed
 add delivered
 mailing lists
@@ -23,6 +22,9 @@ Mailgun exposes the following resources:
   * Stats
   * Messages
   * Mailboxes
+	* Bounces
+	* Unsubscribes
+	* Complaints
 
 Currently the gem only exposes the Mailbox and Routes APIs, but patches are welcome (and easy!). 
 
