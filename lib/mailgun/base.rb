@@ -37,7 +37,7 @@ module Mailgun
     end
 
     def complaints
-      @complaints || = Mailgun::Complaint.new(self)
+      @complaints ||= Mailgun::Complaint.new(self)
     end
   end
 
