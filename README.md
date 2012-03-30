@@ -1,3 +1,18 @@
+ToDo
+=========
+
+Make config initializer actually work
+Allow for a default domain url so that arguments are optional
+Add bounces
+Add unsubscribes
+Add complaints
+add failed
+add delivered
+mailing lists
+tracking?
+stats?
+campaign?
+
 Mailgun
 =========
 This gem allows for idiomatic Mailgun usage from within ruby. Mailgun is a kickass email-as-a-service that lets you use email as if it made sense. Check it out at http://mailgun.net/

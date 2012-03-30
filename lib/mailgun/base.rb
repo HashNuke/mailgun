@@ -23,6 +23,14 @@ module Mailgun
     def mailboxes
       @mailboxes ||= Mailgun::Mailbox.new(self)
     end
+    
+    def bounces
+      @bounces ||= Mailgun::Bounce.new(self)
+    end
+    
+    def unsubscribes
+      @unsubscribes ||= Mailgun::Unsubscribe.new(self)
+    end
 
     def routes
       @routes ||= Mailgun::Route.new(self)
