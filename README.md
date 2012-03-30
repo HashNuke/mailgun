@@ -1,13 +1,4 @@
-ToDo
-=========
 
-Mailgun() is overwriting api key. api key is not persisting
-add failed
-add delivered
-mailing lists
-tracking?
-stats?
-campaign?
 
 Mailgun
 =========
@@ -99,6 +90,18 @@ Making Your Changes
   * Make sure to add tests for it. This is important so we don't break it in a future version unintentionally.
   * After making your changes, be sure to run the Mailgun RSpec specs to make sure everything works.
   * Submit your change as a Pull Request and update the GitHub issue to let us know it is ready for review.
+
+
+TODO
+=========
+
+Mailgun() is overwriting api key. api key is not persisting
+Add failed
+Add delivered
+Mailing Lists
+Tracking?
+Stats?
+Campaign?
 
 Authors
 =======
