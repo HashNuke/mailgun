@@ -23,18 +23,6 @@ module Mailgun
       Mailgun.submit :post, bounce_url(domain), :address => email
     end
 
-  #   def check_address_for_bounces
-  # RestClient.get("https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0"\
-  #                "@api.mailgun.net/v2/samples.mailgun.org/bounces"\
-  #                "/foo@bar.com"){|response, request, result| response }
-  #   end
-    
-#     def add_bounce
-#   RestClient.post("https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0"\
-#                   "@api.mailgun.net/v2/samples.mailgun.org/bounces",
-#                   :address => 'ev@mgrules.com')
-#     end
-
     private
 
     # Helper method to generate the proper url for Mailgun mailbox API calls

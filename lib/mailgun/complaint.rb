@@ -15,6 +15,18 @@ module Mailgun
       end
     end
     
+    def find(domain = Mailgun.domain, email)
+      Mailgun.submit :get, complaint_url(domain, email)
+    end
+
+    def add(domain=Mailgun.domain, email)
+      Mailgun.submit :post, complaint_url(domain), {:address => email}
+    end
+
+    def remove(domain = Mailgun.domain, email)
+      Mailgun.submit :delete, complaint_url(domain, email)
+    end
+
     private
 
     # Helper method to generate the proper url for Mailgun complaints API calls
