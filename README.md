@@ -13,9 +13,9 @@ Mailgun exposes the following resources:
   * Stats
   * Messages
   * Mailboxes
-	* Bounces
-	* Unsubscribes
-	* Complaints
+  * Bounces
+  * Unsubscribes
+  * Complaints
 
 Currently the gem only exposes the Mailbox and Routes APIs, but patches are welcome (and easy!). 
 
@@ -96,10 +96,9 @@ TODO
 =========
 
   * Mailgun() is overwriting api key. api key is not persisting
-  * Bounce specs aren't testing correctly
-    * Add skip and limit functionality
-  * Add failed
-  * Add delivered
+  * Add skip and limit functionality
+  * Distinguish failed in logs
+  * Distinguish delivered in logs
   * Mailing Lists
   * Tracking?
   * Stats?
