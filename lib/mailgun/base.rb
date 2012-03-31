@@ -39,6 +39,10 @@ module Mailgun
     def complaints
       @complaints ||= Mailgun::Complaint.new(self)
     end
+
+    def log
+      @log ||= Mailgun::Log.new(self)
+    end
   end
 
 

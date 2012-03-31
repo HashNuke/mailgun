@@ -9,6 +9,7 @@ require "mailgun/mailbox"
 require "mailgun/bounce"
 require "mailgun/unsubscribe"
 require "mailgun/complaint"
+require "mailgun/log"
 
 #require "startup"
 
