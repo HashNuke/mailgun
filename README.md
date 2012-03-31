@@ -95,13 +95,13 @@ Making Your Changes
 TODO
 =========
 
-Mailgun() is overwriting api key. api key is not persisting
-Add failed
-Add delivered
-Mailing Lists
-Tracking?
-Stats?
-Campaign?
+  * Mailgun() is overwriting api key. api key is not persisting
+  * Add failed
+  * Add delivered
+  * Mailing Lists
+  * Tracking?
+  * Stats?
+  * Campaign?
 
 Authors
 =======
