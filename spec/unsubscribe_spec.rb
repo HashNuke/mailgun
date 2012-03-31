@@ -9,7 +9,7 @@ describe Mailgun::Unsubscribe do
       :email  => "test@sample.mailgun.org",
       :name   => "test",
       :domain => "sample.mailgun.org",
-      :tags   => 'tag1' 
+      :tag   => 'tag1' 
     }
   end
 
@@ -35,10 +35,10 @@ describe Mailgun::Unsubscribe do
 
   describe "delete unsubscribe" do
     it "should make a DELETE request with correct params to remove a given email address" do
-      sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
-      RestClient.should_receive(:delete)
-      .with("#{@mailgun.unsubscribes.send(:unsubscribe_url, @unsubscribe_options[:domain], @unsubscribe_options[:email])}", {})
-      .and_return(sample_response)
+      response_message = "{\"message\"=>\"Unsubscribe event has been removed\", \"address\"=>\"#{@unsubscribe_options[:email]}\"}"
+      Mailgun.should_receive(:submit)
+      .with(:delete, "#{@mailgun.unsubscribes.send(:unsubscribe_url, @unsubscribe_options[:domain], @unsubscribe_options[:email])}")
+      .and_return(response_message)
 
       @mailgun.unsubscribes.remove(@unsubscribe_options[:domain], @unsubscribe_options[:email])
     end
@@ -47,14 +47,11 @@ describe Mailgun::Unsubscribe do
   describe "add unsubscribe" do
     context "to tag" do
       it "should make a POST request with correct params to add a given email address to unsubscribe from a tag" do
-        sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
-        RestClient.should_receive(:post)
-        .with("#{@mailgun.unsubscribes.send(:unsubscribe_url, @unsubscribe_options[:domain])}", {
-          :address => @unsubscribe_options[:email], :tag => @unsubscribe_options[:tags]
-        })
-        .and_return(sample_response)
-
-        @mailgun.unsubscribes.add(@unsubscribe_options[:domain], @unsubscribe_options[:email], @unsubscribe_options[:tags])
+        response_message = "{\"message\"=>\"Address has been added to the unsubscribes table\", \"address\"=>\"#{@unsubscribe_options[:email]}\"}"
+        Mailgun.should_receive(:submit)
+        .with(:post, "#{@mailgun.unsubscribes.send(:unsubscribe_url, @unsubscribe_options[:domain])}",{:address=>@unsubscribe_options[:email], :tag=>@unsubscribe_options[:tag]})
+        .and_return(response_message)
+        @mailgun.unsubscribes.add(@unsubscribe_options[:email], @unsubscribe_options[:domain],  @unsubscribe_options[:tag])
       end
     end
 
@@ -62,12 +59,12 @@ describe Mailgun::Unsubscribe do
       it "should make a POST request with correct params to add a given email address to unsubscribe from all tags" do
         sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
         RestClient.should_receive(:post)
-        .with("#{@mailgun.unsubscribes.send(:unsubscribe_url, @unsubscribe_options[:domain], @unsubscribe_options[:email])}", {
+        .with("#{@mailgun.unsubscribes.send(:unsubscribe_url, @unsubscribe_options[:domain])}", {
           :address => @unsubscribe_options[:email], :tag => '*'
         })
         .and_return(sample_response)
 
-        @mailgun.unsubscribes.add(@unsubscribe_options[:domain], @unsubscribe_options[:email])
+        @mailgun.unsubscribes.add(@unsubscribe_options[:email], @unsubscribe_options[:domain])
       end
     end
   end
