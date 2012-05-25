@@ -14,6 +14,18 @@ module Mailgun
         response["items"].collect {|item| item["address"]}
       end
     end
+
+    def find(domain = Mailgun.domain, email)
+      Mailgun.submit :get, unsubscribe_url(domain, email)
+    end
+
+    def add(email, domain=Mailgun.domain, tag='*')
+      Mailgun.submit :post, unsubscribe_url(domain), {:address => email, :tag => tag}
+    end
+
+    def remove(domain = Mailgun.domain, email)
+      Mailgun.submit :delete, unsubscribe_url(domain, email)
+    end
     
     private
 

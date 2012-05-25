@@ -13,9 +13,9 @@ Mailgun exposes the following resources:
   * Stats
   * Messages
   * Mailboxes
-	* Bounces
-	* Unsubscribes
-	* Complaints
+  * Bounces
+  * Unsubscribes
+  * Complaints
 
 Currently the gem only exposes the Mailbox and Routes APIs, but patches are welcome (and easy!). 
 
@@ -28,7 +28,7 @@ Mailboxes:
     # Initialize your Mailgun object:
     Mailgun.configure do |config|
       config.api_key = 'your-api-key'
-			config.domain  = 'your-mailgun-domain'
+      config.domain  = 'your-mailgun-domain'
     end
 
     @mailgun = Mailgun()
@@ -95,13 +95,14 @@ Making Your Changes
 TODO
 =========
 
-Mailgun() is overwriting api key. api key is not persisting
-Add failed
-Add delivered
-Mailing Lists
-Tracking?
-Stats?
-Campaign?
+  * Mailgun() is overwriting api key. api key is not persisting
+  * Add skip and limit functionality
+  * Distinguish failed in logs
+  * Distinguish delivered in logs
+  * Mailing Lists
+  * Tracking?
+  * Stats?
+  * Campaign?
 
 Authors
 =======
