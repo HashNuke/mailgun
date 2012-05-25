@@ -1,5 +1,4 @@
 
-
 Mailgun
 =========
 This gem allows for idiomatic Mailgun usage from within ruby. Mailgun is a kickass email-as-a-service that lets you use email as if it made sense. Check it out at http://mailgun.net/
@@ -162,14 +161,12 @@ Authors
 =======
 
   * Akash Manohar J (akash@akash.im)
+  * Scott Carleton (@scotterc) - for new functionality and major improvements.
   * Sean Grove (sean@gobushido.com)
+  
 
-Thanks
-======
-Huge thanks to the Mailgun guys for such an amazing service! No time spent on mailservers == way more time spent drinking!
-
-License & Copyright
+License
 ===================
-Released under the MIT license. See LICENSE for more details.
+Released under the MIT license by CloudFuji. See LICENSE for more details.
 
-All copyright Bushido Inc. 2011
+This is a fork of he Cloudfuji/mailgun repo.
