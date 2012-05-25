@@ -1,3 +1,5 @@
+
+
 Mailgun
 =========
 This gem allows for idiomatic Mailgun usage from within ruby. Mailgun is a kickass email-as-a-service that lets you use email as if it made sense. Check it out at http://mailgun.net/
@@ -11,6 +13,9 @@ Mailgun exposes the following resources:
   * Stats
   * Messages
   * Mailboxes
+	* Bounces
+	* Unsubscribes
+	* Complaints
 
 Currently the gem only exposes the Mailbox and Routes APIs, but patches are welcome (and easy!). 
 
@@ -23,6 +28,7 @@ Mailboxes:
     # Initialize your Mailgun object:
     Mailgun.configure do |config|
       config.api_key = 'your-api-key'
+			config.domain  = 'your-mailgun-domain'
     end
 
     @mailgun = Mailgun()
@@ -84,6 +90,18 @@ Making Your Changes
   * Make sure to add tests for it. This is important so we don't break it in a future version unintentionally.
   * After making your changes, be sure to run the Mailgun RSpec specs to make sure everything works.
   * Submit your change as a Pull Request and update the GitHub issue to let us know it is ready for review.
+
+
+TODO
+=========
+
+Mailgun() is overwriting api key. api key is not persisting
+Add failed
+Add delivered
+Mailing Lists
+Tracking?
+Stats?
+Campaign?
 
 Authors
 =======
