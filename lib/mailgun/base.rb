@@ -39,6 +39,18 @@ module Mailgun
     def complaints
       @complaints ||= Mailgun::Complaint.new(self)
     end
+
+    def log
+      @log ||= Mailgun::Log.new(self)
+    end
+
+    def lists
+      @lists ||= Mailgun::List.new(self)
+    end
+
+    def list_members
+      @list_members ||= Mailgun::List::Member.new(self)
+    end
   end
 
 
