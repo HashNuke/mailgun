@@ -8,27 +8,45 @@ The official gem repo is at https://github.com/Bushido/mailgun
 
 Mailgun exposes the following resources:
 
+  * Mailing Lists
+  * Mailing List Members
+  * Mailboxes
   * Routes
   * Log
   * Stats
   * Messages
-  * Mailboxes
-	* Bounces
-	* Unsubscribes
-	* Complaints
+  * Bounces
+  * Unsubscribes
+  * Complaints
 
 Currently the gem only exposes the Mailbox and Routes APIs, but patches are welcome (and easy!). 
+
+ActionMailer
+============
+
+This gem is unnecessary if you'd like to simply hook up Mailgun to Rails' Action Mailer.  Just add the below to your Configuration.
+
+    ActionMailer::Base.smtp_settings = {
+      :port           => 587, 
+      :address        => 'smtp.mailgun.org',
+      :user_name      => 'postmaster@your.mailgun.domain',
+      :password       => 'mailgun-smtp-password',
+      :domain         => 'your.mailgun.domain',
+      :authentication => :plain,
+    }
+    ActionMailer::Base.delivery_method = :smtp
 
 Usage
 =====
 We mimic the ActiveRecord-style interface.
 
-Mailboxes:
+
+Configuration:
 
     # Initialize your Mailgun object:
     Mailgun.configure do |config|
       config.api_key = 'your-api-key'
-			config.domain  = 'your-mailgun-domain'
+      config.domain  = 'your-mailgun-domain'
     end
 
     @mailgun = Mailgun()
@@ -36,6 +54,43 @@ Mailboxes:
     # or alternatively:
     @mailgun = Mailgun(:api_key => 'your-api-key')
     
+
+Mailing Lists:
+
+    # Create a mailing list
+    @mailgun.lists.create "devs@your.mailgun.domain"
+
+    # List all Mailing lists
+    @mailgun.lists.all
+
+    # Find a mailing list
+    @mailgun.lists.find "devs@your.mailgun.domain"
+
+    # Update a mailing list
+    @mailgun.lists.update("devs@your.mailgun.domain", "developers@your.mailgun.domain", "Developers", "Develepor Mailing List")
+
+    # Delete a mailing list
+    @mailgun.lists.delete("developers@your.mailgun.domain")
+
+Mailing List Members:
+
+    # List all members within a mailing list
+    @mailgun.list_members.list "devs@your.mailgun.domain"
+
+    # Find a particular member in a list
+    @mailgun.list_members.find "devs@your.mailgun.domain", "bond@mi6.co.uk"
+
+    # Add a member to a list
+    @mailgun.list_members.add "devs@your.mailgun.domain", "Q@mi6.co.uk"
+
+    # Update a member on a list
+    @mailgun.list_members.update "devs@your.mailgun.domain", "Q@mi6.co.uk", "Q", {:gender => 'male'}, :subscribed => 'no')
+
+    # Remove a member from a list
+    @mailgun.list_members.remove "devs@your.mailgun.domain", "M@mi6.co.uk"
+
+Mailboxes:
+
     # Create a mailbox
     @mailgun.mailboxes.create "new-mailbox@your-domain.com", "password"
     
@@ -46,6 +101,7 @@ Mailboxes:
     # "I'm sorry Bond, it seems your mailbox will be... destroyed!"
     @mailbox.mailboxes.destroy "bond@mi6.co.uk"
     
+
 Routes:
 
     # Initialize your Mailgun object:
@@ -80,7 +136,6 @@ Routes:
 Supported route filters are: `:match_header`, `:match_recipient`, and `:catch_all`
 Supported route actions are: `:forward`, and `:stop`
 
-
 Making Your Changes
 ===================
 
@@ -95,13 +150,13 @@ Making Your Changes
 TODO
 =========
 
-Mailgun() is overwriting api key. api key is not persisting
-Add failed
-Add delivered
-Mailing Lists
-Tracking?
-Stats?
-Campaign?
+  * Mailgun() is overwriting api key. api key is not persisting
+  * Add skip and limit functionality
+  * Distinguish failed in logs
+  * Distinguish delivered in logs
+  * Tracking?
+  * Stats?
+  * Campaign?
 
 Authors
 =======
