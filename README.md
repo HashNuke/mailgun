@@ -1,4 +1,3 @@
-
 Mailgun
 =========
 This gem allows for idiomatic Mailgun usage from within ruby. Mailgun is a kickass email-as-a-service that lets you use email as if it made sense. Check it out at http://mailgun.net/
@@ -83,7 +82,7 @@ Mailing List Members:
     @mailgun.list_members.add "devs@your.mailgun.domain", "Q@mi6.co.uk"
 
     # Update a member on a list
-    @mailgun.list_members.update "devs@your.mailgun.domain", "Q@mi6.co.uk", "Q", {:gender => 'male'}, :subscribed => 'no')
+    @mailgun.list_members.update "devs@your.mailgun.domain", "Q@mi6.co.uk", "Q", {:gender => 'male'}.to_json, :subscribed => 'no')
 
     # Remove a member from a list
     @mailgun.list_members.remove "devs@your.mailgun.domain", "M@mi6.co.uk"
