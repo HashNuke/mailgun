@@ -5,20 +5,20 @@ describe Mailgun::Base do
   it "should raise an error if the api_key has not been set" do
     expect do
       Mailgun()
-    end.should raise_error ArgumentError
+    end.to raise_error ArgumentError
   end
 
   it "can be called directly if the api_key has been set via Mailgun.configure" do
     Mailgun.config { |c| c.api_key = "some-junk-string" }
     expect do
       Mailgun()
-    end.should_not raise_error ArgumentError
+    end.to_not raise_error ArgumentError
   end
 
   it "can be instanced with the api_key as a param" do
     expect do
       Mailgun({:api_key => "some-junk-string"})
-    end.should_not raise_error ArgumentError
+    end.to_not raise_error ArgumentError
   end
 
   describe "Mailgun.new" do
