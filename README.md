@@ -17,9 +17,9 @@ Mailgun exposes the following resources:
 
 Patches are welcome (and easy!). 
 
-## ActionMailer
+## Sending mail using ActionMailer
 
-This gem is unnecessary if you'd like to simply hook up Mailgun to Rails' Action Mailer.  Just add the below to your Configuration.
+If you simply want to send mail using Mailgun, just set the smtp settings in the Rails application like the following. Replace wherever necessary in the following snippet :)
 
     ActionMailer::Base.smtp_settings = {
       :port           => 587, 
