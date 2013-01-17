@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Akash Manohar J", "Sean Grove"]
-  gem.email         = ["akash@akash.im", "s@bushi.do", "sean@fakecoolguys.com"]
+  gem.email         = ["akash@akash.im"]
   gem.description   = %q{Mailgun library for Ruby}
   gem.summary       = %q{Idiomatic library for using the mailgun API from within ruby}
   gem.homepage      = "http://github.com/Bushido/mailgun"
@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.name          = "mailgun"
   gem.require_paths = ["lib"]
-  gem.version       = "0.0.3"
+  gem.version       = "0.5"
   
   gem.add_dependency(%q<rest-client>, [">= 0"])
   gem.add_dependency(%q<multimap>, [">= 0"])
