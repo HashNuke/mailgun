@@ -1,8 +1,6 @@
-Mailgun
-=========
-This gem allows for idiomatic Mailgun usage from within ruby. Mailgun is a kickass email-as-a-service that lets you use email as if it made sense. Check it out at http://mailgun.net/
+# Mailgun rubygem
 
-The official gem repo is at https://github.com/Bushido/mailgun
+This gem allows for idiomatic Mailgun usage from within ruby. Mailgun is a kickass email-as-a-service that lets you use email as if it made sense. Check it out at http://mailgun.net
 
 Mailgun exposes the following resources:
 
@@ -17,10 +15,9 @@ Mailgun exposes the following resources:
   * Unsubscribes
   * Complaints
 
-Currently the gem only exposes the Mailbox and Routes APIs, but patches are welcome (and easy!). 
+Patches are welcome (and easy!). 
 
-ActionMailer
-============
+## ActionMailer
 
 This gem is unnecessary if you'd like to simply hook up Mailgun to Rails' Action Mailer.  Just add the below to your Configuration.
 
@@ -34,12 +31,13 @@ This gem is unnecessary if you'd like to simply hook up Mailgun to Rails' Action
     }
     ActionMailer::Base.delivery_method = :smtp
 
-Usage
-=====
+
+## Usage
+
 We mimic the ActiveRecord-style interface.
 
 
-Configuration:
+#### Configuration
 
     # Initialize your Mailgun object:
     Mailgun.configure do |config|
@@ -53,7 +51,7 @@ Configuration:
     @mailgun = Mailgun(:api_key => 'your-api-key')
     
 
-Mailing Lists:
+#### Mailing Lists
 
     # Create a mailing list
     @mailgun.lists.create "devs@your.mailgun.domain"
@@ -70,7 +68,7 @@ Mailing Lists:
     # Delete a mailing list
     @mailgun.lists.delete("developers@your.mailgun.domain")
 
-Mailing List Members:
+#### Mailing List Members
 
     # List all members within a mailing list
     @mailgun.list_members.list "devs@your.mailgun.domain"
@@ -87,7 +85,7 @@ Mailing List Members:
     # Remove a member from a list
     @mailgun.list_members.remove "devs@your.mailgun.domain", "M@mi6.co.uk"
 
-Mailboxes:
+#### Mailboxes
 
     # Create a mailbox
     @mailgun.mailboxes.create "new-mailbox@your-domain.com", "password"
@@ -100,7 +98,7 @@ Mailboxes:
     @mailbox.mailboxes.destroy "bond@mi6.co.uk"
     
 
-Routes:
+#### Routes
 
     # Initialize your Mailgun object:
     @mailgun = Mailgun(:api_key => 'your-api-key')
@@ -134,19 +132,23 @@ Routes:
 Supported route filters are: `:match_header`, `:match_recipient`, and `:catch_all`
 Supported route actions are: `:forward`, and `:stop`
 
-Making Your Changes
-===================
+
+## Making Your Changes
 
   * Fork the project (Github has really good step-by-step directions)
+
   * Start a feature/bugfix branch
+
   * Commit and push until you are happy with your contribution
+
   * Make sure to add tests for it. This is important so we don't break it in a future version unintentionally.
-  * After making your changes, be sure to run the Mailgun RSpec specs to make sure everything works.
+
+  * After making your changes, be sure to run the Mailgun tests using the `rspec spec` to make sure everything works.
+
   * Submit your change as a Pull Request and update the GitHub issue to let us know it is ready for review.
 
 
-TODO
-=========
+## TODO
 
   * Mailgun() is overwriting api key. api key is not persisting
   * Add skip and limit functionality
@@ -156,16 +158,17 @@ TODO
   * Stats?
   * Campaign?
 
-Authors
-=======
 
-  * Akash Manohar J (akash@akash.im)
-  * Scott Carleton (@scotterc) - for new functionality and major improvements.
-  * Sean Grove (sean@gobushido.com)
-  
+## Authors
 
-License
-===================
-Released under the MIT license by CloudFuji. See LICENSE for more details.
+* Akash Manohar J ([@HashNuke](http://github.com/HashNuke))
+* Sean Grove ([@sgrove](http://github.com/sgrove))
 
-This is a fork of he Cloudfuji/mailgun repo.
+## Contrubutions
+
+* Yomi Colledge ([@baphled](http://github.com/baphled))
+* Scott Carleton ([@scotterc](http://github.com/scotterc)) - new functionality and improvements
+
+## License
+
+Released under the MIT license. See LICENSE for more details.
