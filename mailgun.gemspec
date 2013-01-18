@@ -16,4 +16,7 @@ Gem::Specification.new do |gem|
   
   gem.add_dependency(%q<rest-client>, [">= 0"])
   gem.add_dependency(%q<multimap>, [">= 0"])
+
+  gem.add_development_dependency(%q<rspec>, [">= 2"])
+  gem.add_development_dependency(%q<debugger>, [">= 0"])
 end
