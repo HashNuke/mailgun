@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Mailgun::Complaint do
 
   before :each do
-    @mailgun = Mailgun({:api_key => "api-key"})		# used to get the default values
+    @mailgun = Mailgun({:api_key => "api-key"})
 
     @sample = {
       :email  => "test@sample.mailgun.org",
