@@ -1,12 +1,11 @@
 module Mailgun
+
+  ## List functionality
 	class List
     # Used internally, called from Mailgun::Base
     def initialize(mailgun)
       @mailgun = mailgun
     end
-    
-
-    ## List functionality
 
     # List all mailing lists 
     def all
