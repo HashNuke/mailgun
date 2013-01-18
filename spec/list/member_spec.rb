@@ -38,7 +38,7 @@ describe Mailgun::List::Member do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
       RestClient.should_receive(:post)
       .with("#{@mailgun.list_members.send(:list_member_url, @list_member_options[:list_email])}", {
-        :address => @list_member_options[:email], :subscribed => 'yes', :upsert => 'no'
+        :address => @list_member_options[:email]
       }).and_return(sample_response)
 
       @mailgun.list_members.add(@list_member_options[:list_email], @list_member_options[:email])
@@ -50,7 +50,7 @@ describe Mailgun::List::Member do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
       RestClient.should_receive(:put)
       .with("#{@mailgun.list_members.send(:list_member_url, @list_member_options[:list_email], @list_member_options[:email])}", {
-        :address => @list_member_options[:email], :subscribed => 'yes'
+        :address => @list_member_options[:email]
       }).and_return(sample_response)
 
       @mailgun.list_members.update(@list_member_options[:list_email], @list_member_options[:email])

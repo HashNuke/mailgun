@@ -23,19 +23,22 @@ module Mailgun
     end
 
     # Adds a mailing list member with a given address
-    def add(address, member_address, name=nil, vars={}, subscribed='yes', upsert='no')
-      params = {:address => member_address, :subscribed => subscribed, :upsert => upsert}
+    def add(address, member_address, name=nil, vars={}, subscribed=nil, upsert=nil)
+      params = {:address => member_address}
       params[:name] = name if name
       params[:vars] = vars unless vars.empty?
+      params[:subscribed] = subscribed if subscribed
+      params[:upsert] = upsert if upsert
       Mailgun.submit :post, list_member_url(address), params
     end
 
     # Update a mailing list member with a given address
     # with an optional new member_address, name, vars and subscribed
-    def update(address, member_address, name=nil, vars={}, subscribed='yes')
-      params = {:address => member_address, :subscribed => subscribed}
+    def update(address, member_address, name=nil, vars={}, subscribed=nil)
+      params = {:address => member_address}
       params[:name] = name if name
       params[:vars] = vars unless vars.empty?
+      params[:subscribed] = subscribed if subscribed
       Mailgun.submit :put, list_member_url(address, member_address), params
     end   
 
