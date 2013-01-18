@@ -45,11 +45,11 @@ module Mailgun
     end
 
     def lists
-      @lists ||= Mailgun::List.new(self)
+      @lists ||= Mailgun::MailingList.new(self)
     end
 
     def list_members
-      @list_members ||= Mailgun::List::Member.new(self)
+      @list_members ||= Mailgun::MailingList::Member.new(self)
     end
   end
 

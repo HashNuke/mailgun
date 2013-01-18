@@ -1,5 +1,5 @@
 module Mailgun
-  class List::Member
+  class MailingList::Member
     # Used internally, called from Mailgun::Base
     def initialize(mailgun)
       @mailgun = mailgun

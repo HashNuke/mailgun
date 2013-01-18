@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Mailgun::List do
+describe Mailgun::MailingList do
 
   before :each do
     @mailgun = Mailgun({:api_key => "api-key"})		# used to get the default values
 
-    @list_options = {
+    @sample = {
       :email      => "test@sample.mailgun.org",
       :list_email => "dev@samples.mailgun.org",
       :name       => "test",
@@ -13,57 +13,57 @@ describe Mailgun::List do
     }
   end
 
-  describe "all list" do
+  describe "list mailing lists" do
     it "should make a GET request with the right params" do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
-      RestClient.should_receive(:get)
-      .with("#{@mailgun.lists.send(:list_url)}", {}).and_return(sample_response)
+      Mailgun.should_receive(:submit)
+      .with(:get, "#{@mailgun.lists.send(:list_url)}", {}).and_return(sample_response)
     
-      @mailgun.lists.all
+      @mailgun.lists.list
     end
   end
 
   describe "find list adress" do
     it "should make a GET request with correct params to find given email address" do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
-      RestClient.should_receive(:get)
-      .with("#{@mailgun.lists.send(:list_url, @list_options[:list_email])}", {})
+      Mailgun.should_receive(:submit)
+      .with(:get, "#{@mailgun.lists.send(:list_url, @sample[:list_email])}")
       .and_return(sample_response)
 
-      @mailgun.lists.find(@list_options[:list_email])
+      @mailgun.lists.find(@sample[:list_email])
     end
   end
 
   describe "create list" do
     it "should make a POST request with correct params to add a given email address" do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
-      RestClient.should_receive(:post)
-      .with("#{@mailgun.lists.send(:list_url)}", {:address => @list_options[:list_email]})
+      Mailgun.should_receive(:submit)
+      .with(:post, "#{@mailgun.lists.send(:list_url)}", {:address => @sample[:list_email]})
       .and_return(sample_response)
 
-      @mailgun.lists.create(@list_options[:list_email])
+      @mailgun.lists.create(@sample[:list_email])
     end
   end
 
   describe "update list" do
     it "should make a PUT request with correct params" do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
-      RestClient.should_receive(:put)
-      .with("#{@mailgun.lists.send(:list_url, @list_options[:list_email])}", {:address => @list_options[:email]})
+      Mailgun.should_receive(:submit)
+      .with(:put, "#{@mailgun.lists.send(:list_url, @sample[:list_email])}", {:address => @sample[:email]})
       .and_return(sample_response)
 
-      @mailgun.lists.update(@list_options[:list_email], @list_options[:email])
+      @mailgun.lists.update(@sample[:list_email], @sample[:email])
     end
   end
 
   describe "delete list" do
     it "should make a DELETE request with correct params" do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
-      RestClient.should_receive(:delete)
-      .with("#{@mailgun.lists.send(:list_url, @list_options[:list_email])}", {})
+      Mailgun.should_receive(:submit)
+      .with(:delete, "#{@mailgun.lists.send(:list_url, @sample[:list_email])}")
       .and_return(sample_response)
 
-      @mailgun.lists.delete(@list_options[:list_email])
+      @mailgun.lists.delete(@sample[:list_email])
     end
   end
 

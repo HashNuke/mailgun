@@ -1,19 +1,17 @@
 module Mailgun
 
-  ## List functionality
-	class List
+  # Mailing List functionality
+  # Refer http://documentation.mailgun.net/api-mailinglists.html for optional parameters
+
+	class MailingList
     # Used internally, called from Mailgun::Base
     def initialize(mailgun)
       @mailgun = mailgun
     end
 
-    # List all mailing lists 
-    def all
-      response = Mailgun.submit :get, list_url
-
-      if response
-        response["items"].collect {|item| item["address"]}
-      end
+    # List all mailing lists
+    def list(options={})
+      response = Mailgun.submit(:get, list_url, options)["items"] || []
     end
 
     # List a single mailing list by a given address

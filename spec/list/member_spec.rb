@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mailgun::List::Member do
+describe Mailgun::MailingList::Member do
 
   before :each do
     @mailgun = Mailgun({:api_key => "api-key"})		# used to get the default values
