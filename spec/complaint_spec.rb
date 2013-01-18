@@ -14,16 +14,18 @@ describe Mailgun::Complaint do
 
   describe "list complaints" do
     it "should make a GET request with the right params" do
-      sample_response = {
-        "total_count" => 1,
-        "items" => [
-          {
-              "count" => 2,
-              "created_at" => "Tue, 15 Nov 2011 08:25:11 GMT",
-              "address" => "test@test.com"
-          }
-        ]
-      }.to_json
+      sample_response = <<EOF
+{
+  "total_count": 1,
+  "items": [
+      {
+          "count": 2,
+          "created_at": "Tue, 15 Nov 2011 08:25:11 GMT",
+          "address": "romanto@profista.com"
+      }
+  ]
+}
+EOF
 
       complaints_url = @mailgun.complaints(@sample[:domain]).send(:complaint_url)
 
@@ -38,7 +40,13 @@ describe Mailgun::Complaint do
 
   describe "add complaint" do
     it "should make a POST request with correct params to add a given email address to complaint from a tag" do
-      sample_response = "{\"message\"=>\"Address has been added to the complaints table\", \"address\"=>\"#{@sample[:email]}\"}"
+      sample_response = <<EOF
+{
+  "message": "Address has been added to the complaints table",
+  "address": "#{@sample[:email]}"
+}
+EOF
+
       complaints_url = @mailgun.complaints(@sample[:domain]).send(:complaint_url)
 
       Mailgun.should_receive(:submit)
@@ -52,7 +60,16 @@ describe Mailgun::Complaint do
 
   describe "find complaint" do
     it "should make a GET request with the right params to find given email address" do
-      sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
+      sample_response = <<EOF
+{
+  "complaint": {
+      "count": 2,
+      "created_at": "Tue, 15 Nov 2011 08:25:11 GMT",
+      "address": "romanto@profista.com"
+  }
+}
+EOF
+
       complaints_url = @mailgun.complaints(@sample[:domain]).send(:complaint_url, @sample[:email])
 
       Mailgun.should_receive(:submit)
@@ -66,7 +83,13 @@ describe Mailgun::Complaint do
 
   describe "delete complaint" do
     it "should make a DELETE request with correct params to remove a given email address" do
-      sample_response = "{\"message\"=>\"Complaint event has been removed\", \"address\"=>\"#{@sample[:email]}\"}"
+      sample_response = <<EOF
+{
+    "message": "Complaint event has been removed",
+    "address": "#{@sample[:email]}"}"
+}
+EOF
+
       complaints_url = @mailgun.complaints(@sample[:domain]).send(:complaint_url, @sample[:email])
 
       Mailgun.should_receive(:submit)
