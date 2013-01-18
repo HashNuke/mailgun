@@ -57,7 +57,7 @@ describe Mailgun::Mailbox do
         .with(:delete, mailboxes_url)
         .and_return({})
 
-      @mailgun.mailboxes(@sample[:domain]).destroy @sample[:email]
+      @mailgun.mailboxes(@sample[:domain]).destroy(@sample[:name])
     end
   end
 end
