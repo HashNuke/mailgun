@@ -30,7 +30,7 @@ EOF
       complaints_url = @mailgun.complaints(@sample[:domain]).send(:complaint_url)
 
       Mailgun.should_receive(:submit).
-        with(:get, complaints_url).
+        with(:get, complaints_url, {}).
         and_return(sample_response)
 
       @mailgun.complaints(@sample[:domain]).list

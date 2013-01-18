@@ -5,8 +5,8 @@ module Mailgun
       @mailgun = mailgun
     end
     
-    def list(limit=100, skip=0)
-      Mailgun.submit(:get, route_url, :limit => limit, :skip => skip)["items"] || []
+    def list(options={})
+      Mailgun.submit(:get, route_url, options)["items"] || []
     end
 
     def find(route_id)

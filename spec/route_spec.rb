@@ -9,10 +9,16 @@ describe Mailgun::Route do
 
   describe "list routes" do
     before :each do
-      sample_response = "{\"items\": []}"
-      RestClient.should_receive(:get)
-        .with("#{@mailgun.routes.send(:route_url)}",:limit=>100, :skip=>0)
-        .and_return(sample_response)
+      sample_response = <<EOF
+{
+  "total_count": 0,
+  "items": []
+}
+EOF
+
+      Mailgun.should_receive(:submit).
+        with(:get, "#{@mailgun.routes.send(:route_url)}", {}).
+        and_return(sample_response)
     end
       
     it "should make a GET request with the right params" do
@@ -26,9 +32,26 @@ describe Mailgun::Route do
 
   describe "get route" do
     it "should make a GET request with the right params" do
-      RestClient.should_receive(:get)
-        .with("#{@mailgun.routes.send(:route_url, @sample_route_id)}", {})
-        .and_return("{\"route\": {\"id\": \"#{@sample_route_id}\" }}")
+      sample_response = <<EOF
+{
+  "route": {
+      "description": "Sample route",
+      "created_at": "Wed, 15 Feb 2012 13:03:31 GMT",
+      "actions": [
+          "forward(\"http://myhost.com/messages/\")",
+          "stop()"
+      ],
+      "priority": 1,
+      "expression": "match_recipient(\".*@samples.mailgun.org\")",
+      "id": "4f3bad2335335426750048c6"
+  }
+}
+EOF
+
+      Mailgun.should_receive(:submit).
+        with(:get, "#{@mailgun.routes.send(:route_url, @sample_route_id)}").
+        and_return(sample_response)
+
       @mailgun.routes.find @sample_route_id
     end
   end
@@ -42,8 +65,8 @@ describe Mailgun::Route do
       options[:expression]  = [:match_recipient, "sample.mailgun.org"]
       options[:action]      = [[:forward, "http://test-site.com"], [:stop]]
 
-      RestClient.should_receive(:post)
-        .with(@mailgun.routes.send(:route_url), instance_of(Multimap))
+      Mailgun.should_receive(:submit)
+        .with(:post, @mailgun.routes.send(:route_url), instance_of(Multimap))
         .and_return("{\"route\": {\"id\": \"@sample_route_id\"}}")
       
       @mailgun.routes.create(
@@ -59,9 +82,9 @@ describe Mailgun::Route do
     it "should make a PUT request with the right params" do
       options = {}
       options[:description] = "test_route"
-      
-      RestClient.should_receive(:put)
-        .with("#{@mailgun.routes.send(:route_url, @sample_route_id)}", instance_of(Multimap))
+
+      Mailgun.should_receive(:submit)
+        .with(:put, "#{@mailgun.routes.send(:route_url, @sample_route_id)}", instance_of(Multimap))
         .and_return("{\"id\": \"#{@sample_route_id}\"}")
       @mailgun.routes.update @sample_route_id, options
     end
@@ -69,9 +92,9 @@ describe Mailgun::Route do
 
   describe "delete route" do
     it "should make a DELETE request with the right params" do
-      RestClient.should_receive(:delete)
-        .with("#{@mailgun.routes.send(:route_url, @sample_route_id)}", {})
-        .and_return("{\"id\": \"#{@sample_route_id}\"}")
+      Mailgun.should_receive(:submit).
+        with(:delete, "#{@mailgun.routes.send(:route_url, @sample_route_id)}").
+        and_return("{\"id\": \"#{@sample_route_id}\"}")
       @mailgun.routes.destroy @sample_route_id
     end
   end

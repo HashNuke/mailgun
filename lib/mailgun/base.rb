@@ -20,20 +20,20 @@ module Mailgun
     end
 
     # Returns an instance of Mailgun::Mailbox configured for the current API user
-    def mailboxes
-      @mailboxes ||= Mailgun::Mailbox.new(self)
+    def mailboxes(domain = Mailgun.domain)
+      Mailgun::Mailbox.new(self, domain)
     end
     
     def routes
       @routes ||= Mailgun::Route.new(self)
     end
     
-    def bounces
-      @bounces ||= Mailgun::Bounce.new(self)
+    def bounces(domain = Mailgun.domain)
+      Mailgun::Bounce.new(self, domain)
     end
     
-    def unsubscribes
-      @unsubscribes ||= Mailgun::Unsubscribe.new(self)
+    def unsubscribes(domain = Mailgun.domain)
+      Mailgun::Unsubscribe.new(self, domain)
     end
 
     def complaints(domain = Mailgun.domain)

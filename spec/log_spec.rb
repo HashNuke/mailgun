@@ -15,7 +15,9 @@ describe Mailgun::Log do
   describe "list log" do
     it "should make a GET request with the right params" do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
-      RestClient.should_receive(:get).with("#{@mailgun.log.send(:log_url, @log_options[:domain])}", {:limit => 100, :skip => 0}).and_return(sample_response)
+      Mailgun.should_receive(:submit).
+        with(:get, "#{@mailgun.log.send(:log_url, @log_options[:domain])}", {}).
+        and_return(sample_response)
 
       @mailgun.log.list @log_options[:domain]
     end
