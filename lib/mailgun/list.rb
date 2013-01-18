@@ -8,8 +8,6 @@ module Mailgun
 
     ## List functionality
 
-    # TODO add default domain functionality for the address names of lists
-
     # List all mailing lists 
     def all
       response = Mailgun.submit :get, list_url
