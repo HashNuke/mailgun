@@ -54,7 +54,7 @@ describe Mailgun::Mailbox do
     it "should make a DELETE request with the right params" do
       mailboxes_url = @mailgun.mailboxes(@sample[:domain]).send(:mailbox_url, @sample[:name])
       Mailgun.should_receive(:submit)
-        .with(:delete, mailboxes_url, {})
+        .with(:delete, mailboxes_url)
         .and_return({})
 
       @mailgun.mailboxes(@sample[:domain]).destroy @sample[:email]

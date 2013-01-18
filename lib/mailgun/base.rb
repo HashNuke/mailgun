@@ -40,16 +40,16 @@ module Mailgun
       Mailgun::Complaint.new(self, domain)
     end
 
-    def log
-      @log ||= Mailgun::Log.new(self)
+    def log(domain=Mailgun.domain)
+      Mailgun::Log.new(self, domain)
     end
 
     def lists
       @lists ||= Mailgun::MailingList.new(self)
     end
 
-    def list_members
-      @list_members ||= Mailgun::MailingList::Member.new(self)
+    def list_members(address)
+      Mailgun::MailingList::Member.new(self, address)
     end
   end
 

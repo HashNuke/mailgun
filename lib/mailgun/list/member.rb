@@ -1,58 +1,52 @@
 module Mailgun
+  # List Member functionality
+  # Refer Mailgun docs for optional params
   class MailingList::Member
+
     # Used internally, called from Mailgun::Base
-    def initialize(mailgun)
+    def initialize(mailgun, address)
       @mailgun = mailgun
+      @address = address
     end
-    
-    ## List Member functionality
 
     # List all mailing list members
-    # TODO add parameters: subscribed, limit, skip
-    def list(address)
-      response = Mailgun.submit :get, list_member_url(address)
-
-      if response
-        response["items"].collect {|item| item["address"]}
-      end
+    def list(options={})
+      response = Mailgun.submit(:get, list_member_url, options)["items"]
     end
 
     # List a single mailing list member by a given address
-    def find(address, member_address)
-      Mailgun.submit :get, list_member_url(address, member_address)
+    def find(member_address)
+      Mailgun.submit :get, list_member_url(member_address)
     end
+
 
     # Adds a mailing list member with a given address
-    def add(address, member_address, name=nil, vars={}, subscribed=nil, upsert=nil)
+    # NOTE Use create instead of add?
+    def add(member_address, options={})
       params = {:address => member_address}
-      params[:name] = name if name
-      params[:vars] = vars unless vars.empty?
-      params[:subscribed] = subscribed if subscribed
-      params[:upsert] = upsert if upsert
-      Mailgun.submit :post, list_member_url(address), params
+      Mailgun.submit :post, list_member_url, params.merge(options)
     end
 
+    # TODO add spec?
+    alias_method :create, :add
+
     # Update a mailing list member with a given address
-    # with an optional new member_address, name, vars and subscribed
-    def update(address, member_address, name=nil, vars={}, subscribed=nil)
+    def update(member_address, options={})
       params = {:address => member_address}
-      params[:name] = name if name
-      params[:vars] = vars unless vars.empty?
-      params[:subscribed] = subscribed if subscribed
-      Mailgun.submit :put, list_member_url(address, member_address), params
+      Mailgun.submit :put, list_member_url(member_address), params.merge(options)
     end   
 
     # Deletes a mailing list member with a given address
-    def remove(address, member_address)
-      Mailgun.submit :delete, list_member_url(address, member_address)
+    def remove(member_address)
+      Mailgun.submit :delete, list_member_url(member_address)
     end
 
 
     private
 
     # Helper method to generate the proper url for Mailgun mailbox API calls
-    def list_member_url(address, member_address=nil)
-      "#{@mailgun.base_url}/lists#{'/' + address}/members#{'/' + member_address if member_address}"
+    def list_member_url(member_address=nil)
+      "#{@mailgun.base_url}/lists#{'/' + @address}/members#{'/' + member_address if member_address}"
     end
     
   end
