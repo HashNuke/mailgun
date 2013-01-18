@@ -57,6 +57,7 @@ module Mailgun
   # Submits the API call to the Mailgun server
   def self.submit(method, url, parameters={})
     begin
+      parameters = {:params => parameters} if method == :get
       return JSON(RestClient.send(method, url, parameters))
     rescue => e
       error_message = nil

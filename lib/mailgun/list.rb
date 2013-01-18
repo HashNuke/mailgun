@@ -23,21 +23,16 @@ module Mailgun
     end
 
     # Create a mailing list with a given address
-    # with an optional name and description
-    def create(address, name=nil, description=nil)
+    def create(address, options={})
     	params = {:address => address}
-    	params[:name] = name if name
-    	params[:description] = description if description
-      Mailgun.submit :post, list_url, params
+      Mailgun.submit :post, list_url, params.merge(options)
     end
 
     # Update a mailing list with a given address
     # with an optional new address, name or description
-    def update(address, new_address, name=nil, description=nil)
+    def update(address, new_address, options={})
      	params = {:address => new_address}
-    	params[:name] = name if name
-    	params[:description] = description if description
-      Mailgun.submit :put, list_url(address), params
+      Mailgun.submit :put, list_url(address), params.merge(options)
     end		
 
     # Deletes a mailing list with a given address
