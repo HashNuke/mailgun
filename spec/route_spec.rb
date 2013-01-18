@@ -14,13 +14,13 @@ describe Mailgun::Route do
   "total_count": 0,
   "items": []
 }
-EOF
+EOF.to_json
 
       Mailgun.should_receive(:submit).
         with(:get, "#{@mailgun.routes.send(:route_url)}", {}).
         and_return(sample_response)
     end
-      
+
     it "should make a GET request with the right params" do
       @mailgun.routes.list
     end
