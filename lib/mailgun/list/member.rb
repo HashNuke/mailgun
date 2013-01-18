@@ -18,12 +18,11 @@ module Mailgun
     end
 
     # List a single mailing list member by a given address
-    def find(address, member_address) 
+    def find(address, member_address)
       Mailgun.submit :get, list_member_url(address, member_address)
     end
 
     # Adds a mailing list member with a given address
-    # TODO add name, vars, subscribed, upsert
     def add(address, member_address, name=nil, vars={}, subscribed='yes', upsert='no')
       params = {:address => member_address, :subscribed => subscribed, :upsert => upsert}
       params[:name] = name if name
