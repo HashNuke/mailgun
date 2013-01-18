@@ -36,8 +36,8 @@ module Mailgun
       @unsubscribes ||= Mailgun::Unsubscribe.new(self)
     end
 
-    def complaints
-      @complaints ||= Mailgun::Complaint.new(self)
+    def complaints(domain = Mailgun.domain)
+      Mailgun::Complaint.new(self, domain)
     end
 
     def log
