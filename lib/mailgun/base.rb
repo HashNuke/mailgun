@@ -23,6 +23,10 @@ module Mailgun
     def mailboxes(domain = Mailgun.domain)
       Mailgun::Mailbox.new(self, domain)
     end
+
+    def messages(domain = Mailgun.domain)
+      @messages ||= Mailgun::Message.new(self, domain)
+    end
     
     def routes
       @routes ||= Mailgun::Route.new(self)
