@@ -2,8 +2,6 @@
 #
 # @author Jon Yom-Tov
 #
-# Usage:
-#
 module Mailgun
   class Mail
     
