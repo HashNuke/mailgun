@@ -59,7 +59,6 @@ module Mailgun
       end
       
       Mailgun.submit(:post, mail_url, data)   
-      # :track BOOL
     end
     
     private
