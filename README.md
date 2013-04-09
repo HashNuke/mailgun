@@ -4,6 +4,7 @@ This gem allows for idiomatic Mailgun usage from within ruby. Mailgun is a kicka
 
 Mailgun exposes the following resources:
 
+  * Sending email
   * Mailing Lists
   * Mailing List Members
   * Mailboxes
@@ -184,6 +185,7 @@ Supported route actions are: `:forward`, and `:stop`
 
 * Yomi Colledge ([@baphled](http://github.com/baphled))
 * Scott Carleton ([@scotterc](http://github.com/scotterc)) - new functionality and improvements
+* Alan deLevie ([@adelevie](http://github.com/adelevie)) - Sending email
 
 ## License
 
