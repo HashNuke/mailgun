@@ -51,6 +51,18 @@ end
 @mailgun = Mailgun(:api_key => 'your-api-key')
 ```
 
+#### Sending Email
+```ruby
+parameters = {
+  :to => "cooldev@your.mailgun.domain",
+  :subject => "missing tps reports",
+  :text => "yeah, we're gonna need you to come in on friday...yeah.",
+  :from => "lumberg.bill@initech.mailgun.domain"
+}
+@mailgun.messages.send_email(parameters)
+```
+####
+
 #### Mailing Lists
 ```ruby
 # Create a mailing list
