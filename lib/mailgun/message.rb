@@ -20,7 +20,7 @@ module Mailgun
 
     #private
 
-    # Helper method to generate the proper url for Mailgun complaints API calls
+    # Helper method to generate the proper url for Mailgun message API calls
     def messages_url
       "#{@mailgun.base_url}/#{@domain}/messages"
     end
