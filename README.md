@@ -15,6 +15,7 @@ Mailgun exposes the following resources:
   * Bounces
   * Unsubscribes
   * Complaints
+  * Domain management
 
 Patches are welcome (and easy!). 
 
