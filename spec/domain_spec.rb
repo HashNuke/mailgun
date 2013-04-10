@@ -48,7 +48,7 @@ describe Mailgun::Domain do
         with(:post, domains_url, {:name => @sample[:domain]} ).
         and_return(sample_response)
 
-      @mailgun.domains.add(@sample[:domain])
+      @mailgun.domains.create(@sample[:domain])
     end
   end
 

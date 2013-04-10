@@ -19,7 +19,7 @@ module Mailgun
     end
 
     # Add domain to account
-    def add(domain, opts = {})
+    def create(domain, opts = {})
       opts = {name: domain}.merge(opts)
       Mailgun.submit :post, domain_url, opts
     end
@@ -31,7 +31,7 @@ module Mailgun
 
     private
 
-    # Helper method to generate the proper url for Mailgun mailbox API calls
+    # Helper method to generate the proper url for Mailgun domain API calls
     def domain_url(domain = nil)
       "#{@mailgun.base_url}/domains#{'/' + domain if domain}"
     end
