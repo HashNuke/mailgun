@@ -114,21 +114,6 @@ parameters = {
 @mailbox.mailboxes.destroy "bond@mi6.co.uk"
 ```
 
-#### Domains
-```ruby
-# Add a domain
-@mailgun.domains.create "example.com"
-
-# List all domains that belong to the account
-@mailgun.domains.list
-
-# Get info for a domain
-@mailgun.domains.find "example.com"
-
-# Remove a domain
-@mailbox.domains.delete "example.com"
-```
-
 #### Routes
 ```ruby
 # Initialize your Mailgun object:
