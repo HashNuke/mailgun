@@ -36,6 +36,10 @@ module Mailgun
       Mailgun::Bounce.new(self, domain)
     end
     
+    def domains
+      Mailgun::Domain.new(self)
+    end
+
     def unsubscribes(domain = Mailgun.domain)
       Mailgun::Unsubscribe.new(self, domain)
     end
