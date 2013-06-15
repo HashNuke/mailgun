@@ -151,6 +151,21 @@ Supported route filters are: `:match_header`, `:match_recipient`, and `:catch_al
 Supported route actions are: `:forward`, and `:stop`
 
 
+#### Domains
+```ruby
+# Add a domain
+@mailgun.domains.create "example.com"
+
+# List all domains that belong to the account
+@mailgun.domains.list
+
+# Get info for a domain
+@mailgun.domains.find "example.com"
+
+# Remove a domain
+@mailbox.domains.delete "example.com"
+```
+
 ## Making Your Changes
 
   * Fork the project (Github has really good step-by-step directions)
