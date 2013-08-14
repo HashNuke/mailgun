@@ -70,16 +70,21 @@ module Mailgun
       parameters = {:params => parameters} if method == :get
       return JSON(RestClient.send(method, url, parameters))
     rescue => e
-      error_message = nil
-      if e.respond_to? :http_body
-        begin
-          error_message = JSON(e.http_body)["message"]
-        rescue
-          raise e
+      begin
+        error_code = e.http_code
+        error_message = JSON(e.http_body)["message"]
+        error = Mailgun::Error.new(
+          :code => error_code || nil,
+          :message => error_message || nil
+        )
+        if error.handle.kind_of? Mailgun::ErrorBase
+          raise error
+        else
+          return error.handle
         end
-        raise Mailgun::Error.new(error_message)
+      rescue
+        raise e
       end
-      raise e
     end
   end
 
