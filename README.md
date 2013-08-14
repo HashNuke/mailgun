@@ -70,7 +70,7 @@ parameters = {
 @mailgun.lists.create "devs@your.mailgun.domain"
 
 # List all Mailing lists
-@mailgun.lists.all
+@mailgun.lists.list
 
 # Find a mailing list
 @mailgun.lists.find "devs@your.mailgun.domain"
@@ -111,6 +111,21 @@ parameters = {
 # Destroy a mailbox (queue bond-villian laughter)
 # "I'm sorry Bond, it seems your mailbox will be... destroyed!"
 @mailbox.mailboxes.destroy "bond@mi6.co.uk"
+```
+
+#### Bounces
+```ruby
+# List last bounces (100 limit)
+@mailgun.bounces.list
+
+# Find bounces
+@mailgun.bounces.find "user@ema.il"
+
+# Add bounce
+@maligun.bounces.add "user@ema.il"
+
+# Clean user bounces
+@mailbox.bounces.destroy "user@ema.il"
 ```
 
 #### Routes
