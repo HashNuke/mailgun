@@ -19,5 +19,6 @@ require "mailgun/message"
 
 def Mailgun(options={})
   options[:api_key] = Mailgun.api_key if Mailgun.api_key
+  options[:domain] = Mailgun.domain if Mailgun.domain
   Mailgun::Base.new(options)
 end
