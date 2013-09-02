@@ -237,6 +237,7 @@ Supported route actions are: `:forward`, and `:stop`
 * Alan deLevie ([@adelevie](http://github.com/adelevie)) - Sending email
 * kdayton (<http://github.com/kdayton->) - Support for domains API
 * gabriel (<http://github.com/gabriel>) - Fix to accept domain in options
+* polysign (<http://github.com/polysign>) - Support for campaigns API
 
 ## License
 
