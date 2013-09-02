@@ -16,15 +16,16 @@ Mailgun exposes the following resources:
   * Unsubscribes
   * Complaints
   * Domain management
+  * Campaign management
 
-Patches are welcome (and easy!). 
+Patches are welcome (and easy!).
 
 ## Sending mail using ActionMailer
 
 If you simply want to send mail using Mailgun, just set the smtp settings in the Rails application like the following. Replace wherever necessary in the following snippet :)
 ```ruby
 ActionMailer::Base.smtp_settings = {
-  :port           => 587, 
+  :port           => 587,
   :address        => 'smtp.mailgun.org',
   :user_name      => 'postmaster@your.mailgun.domain',
   :password       => 'mailgun-smtp-password',
@@ -181,6 +182,24 @@ Supported route actions are: `:forward`, and `:stop`
 @mailbox.domains.delete "example.com"
 ```
 
+#### Campaigns
+```ruby
+# Add a campaign
+@mailgun.campaigns.create "Campaign Master", "Optional ID"
+
+# List all campaigns that belong to the account
+@mailgun.campaigns.list
+
+# Get info for a campaign
+@mailgun.campaigns.find "Campaign ID"
+
+# Update a campaign
+@mailbox.campaigns.update "Campaign ID", {:name => "New Campaign Name", :id => "New ID"}
+
+# Remove a campaign
+@mailbox.campaigns.delete "Campaign ID"
+```
+
 ## Making Your Changes
 
   * Fork the project (Github has really good step-by-step directions)
@@ -204,7 +223,6 @@ Supported route actions are: `:forward`, and `:stop`
   * Distinguish delivered in logs
   * Tracking?
   * Stats?
-  * Campaign?
 
 
 ## Authors
