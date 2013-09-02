@@ -29,17 +29,21 @@ module Mailgun
     def messages(domain = Mailgun.domain)
       @messages ||= Mailgun::Message.new(self, domain)
     end
-    
+
     def routes
       @routes ||= Mailgun::Route.new(self)
     end
-    
+
     def bounces(domain = Mailgun.domain)
       Mailgun::Bounce.new(self, domain)
     end
-    
+
     def domains
       Mailgun::Domain.new(self)
+    end
+
+    def campaigns(domain = Mailgun.domain)
+      Mailgun::Campaign.new(self, domain)
     end
 
     def unsubscribes(domain = Mailgun.domain)
@@ -68,6 +72,8 @@ module Mailgun
   def self.submit(method, url, parameters={})
     begin
       parameters = {:params => parameters} if method == :get
+      puts "~debug:#{File.basename(__FILE__)}:#{__LINE__}:parameters #{parameters.class.to_s}: #{parameters.inspect}"
+      puts "~debug:#{File.basename(__FILE__)}:#{__LINE__}:url #{url.class.to_s}: #{url.inspect}"
       return JSON(RestClient.send(method, url, parameters))
     rescue => e
       error_message = nil
@@ -92,7 +98,8 @@ module Mailgun
                   :protocol,
                   :mailgun_host,
                   :test_mode,
-                  :domain
+                  :domain,
+                  :campaign
 
     def configure
       yield self
