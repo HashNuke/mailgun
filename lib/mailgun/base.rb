@@ -72,8 +72,6 @@ module Mailgun
   def self.submit(method, url, parameters={})
     begin
       parameters = {:params => parameters} if method == :get
-      puts "~debug:#{File.basename(__FILE__)}:#{__LINE__}:parameters #{parameters.class.to_s}: #{parameters.inspect}"
-      puts "~debug:#{File.basename(__FILE__)}:#{__LINE__}:url #{url.class.to_s}: #{url.inspect}"
       return JSON(RestClient.send(method, url, parameters))
     rescue => e
       error_message = nil
