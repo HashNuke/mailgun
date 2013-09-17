@@ -30,11 +30,22 @@ describe Mailgun::Log do
         :from => "lumberg.bill@initech.mailgun.domain"
       }
       Mailgun.should_receive(:submit)                            \
-        .with(:post, @mailgun.messages.messages_url, parameters) \
+        .with(:post, @mailgun.messages.publish_messages_url, parameters) \
         .and_return(sample_response)
 
       @mailgun.messages.send_email(parameters)
     end
   end
 
+  describe "find message" do
+    it "should make a GET request to find a message" do
+      sample_response = "{\"Received\": \"by foo bar\", \"From\": \"foobar@example.com\", \"To\":\"Foo Bar<foo@example.com>\", \"subject\":\"Hi\", \"stripped-html\": \"<html><body>Hi</body></html>\"}"
+      message_id = "WyJhMGU2YTFiZjIzIiwgImFV"
+      Mailgun.should_receive(:submit)
+      .with(:get, "#{@mailgun.messages.send(:messages_url, message_id)}", {})
+      .and_return(sample_response)
+
+      @mailgun.messages.find(message_id)
+    end
+  end
 end
