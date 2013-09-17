@@ -15,14 +15,20 @@ module Mailgun
       # :in_test_mode BOOL. override the @use_test_mode setting
       # :tags to add tags to the email
       # :track BOOL
-      Mailgun.submit(:post, messages_url, parameters)
+      Mailgun.submit(:post, publish_messages_url, parameters)
+    end
+    
+    def find(address, parameters={})
+      response = Mailgun.submit(:get, messages_url(address), parameters)
     end
 
-    #private
-
     # Helper method to generate the proper url for Mailgun message API calls
-    def messages_url
+    def publish_messages_url(address=nil)
       "#{@mailgun.base_url}/#{@domain}/messages"
+    end
+
+    def messages_url(address=nil)
+      "#{@mailgun.base_url}/domains/#{@domain}/messages#{'/' + address if address}"
     end
   end
 end

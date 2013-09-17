@@ -19,3 +19,4 @@ startup.rb
 Guardfile
 .DS_Store
 lib/startup.rb
+.rvmrc
