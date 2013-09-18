@@ -22,6 +22,11 @@ module Mailgun
       response = Mailgun.submit(:get, messages_url(address), parameters)
     end
 
+    # Removes a stored message from account
+    def delete(message_id)
+      Mailgun.submit :delete, messages_url(message_id)
+    end
+
     # Helper method to generate the proper url for Mailgun message API calls
     def publish_messages_url(address=nil)
       "#{@mailgun.base_url}/#{@domain}/messages"

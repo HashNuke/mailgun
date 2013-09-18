@@ -48,4 +48,17 @@ describe Mailgun::Log do
       @mailgun.messages.find(message_id)
     end
   end
+
+  describe "delete message" do
+    it "should make a DELETE request with correct params" do
+      sample_response = "{\"message\": \"Message has been deleted\"}"
+      message_id = "WyJhMGU2YTFiZjIzIiwgImFV"
+
+      Mailgun.should_receive(:submit).
+        with(:delete, @mailgun.messages.send(:messages_url, message_id)).
+        and_return(sample_response)
+
+      @mailgun.messages.delete(message_id)
+    end
+  end
 end
