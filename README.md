@@ -16,6 +16,7 @@ Mailgun exposes the following resources:
   * Unsubscribes
   * Complaints
   * Domain management
+  * Campaign management
 
 Patches are welcome (and easy!).
 
@@ -181,6 +182,24 @@ Supported route actions are: `:forward`, and `:stop`
 @mailbox.domains.delete "example.com"
 ```
 
+#### Campaigns
+```ruby
+# Add a campaign
+@mailgun.campaigns.create "Campaign Master", "Optional ID"
+
+# List all campaigns that belong to the account
+@mailgun.campaigns.list
+
+# Get info for a campaign
+@mailgun.campaigns.find "Campaign ID"
+
+# Update a campaign
+@mailbox.campaigns.update "Campaign ID", {:name => "New Campaign Name", :id => "New ID"}
+
+# Remove a campaign
+@mailbox.campaigns.delete "Campaign ID"
+```
+
 ## Making Your Changes
 
   * Fork the project (Github has really good step-by-step directions)
@@ -205,7 +224,6 @@ Supported route actions are: `:forward`, and `:stop`
   * Distinguish delivered in logs
   * Tracking?
   * Stats?
-  * Campaign?
 
 
 ## Maintainer

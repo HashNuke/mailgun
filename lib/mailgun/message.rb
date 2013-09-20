@@ -14,6 +14,7 @@ module Mailgun
       # :at for delayed delivery time option
       # :in_test_mode BOOL. override the @use_test_mode setting
       # :tags to add tags to the email
+      # :campaign id to which the message belongs
       # :track BOOL
       Mailgun.submit(:post, messages_url, parameters)
     end
