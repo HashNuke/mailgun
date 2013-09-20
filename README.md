@@ -207,18 +207,17 @@ Supported route actions are: `:forward`, and `:stop`
   * Campaign?
 
 
+## Maintainer
+
+Akash Manohar / [@HashNuke](http://github.com/HashNuke)
+
+
 ## Authors
 
-* Akash Manohar J ([@HashNuke](http://github.com/HashNuke))
-* Sean Grove ([@sgrove](http://github.com/sgrove))
+* Akash Manohar / [@HashNuke](http://github.com/HashNuke)
+* Sean Grove / [@sgrove](http://github.com/sgrove)
 
-## Contrubutions
-
-* Yomi Colledge ([@baphled](http://github.com/baphled))
-* Scott Carleton ([@scotterc](http://github.com/scotterc)) - new functionality and improvements
-* Alan deLevie ([@adelevie](http://github.com/adelevie)) - Sending email
-* kdayton (<http://github.com/kdayton->) - Support for domains API
-* gabriel (<http://github.com/gabriel>) - Fix to accept domain in options
+See CONTRIBUTORS.md file for contributor credits.
 
 ## License
 
