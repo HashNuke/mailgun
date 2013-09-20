@@ -19,4 +19,5 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency(%q<rspec>, [">= 2"])
   gem.add_development_dependency(%q<debugger>, [">= 0"])
+  gem.add_development_dependency(%q<vcr>, [">= 0"])
 end
