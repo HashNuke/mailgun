@@ -42,6 +42,10 @@ module Mailgun
       Mailgun::Domain.new(self)
     end
 
+    def campaigns(domain = Mailgun.domain)
+      Mailgun::Campaign.new(self, domain)
+    end
+
     def unsubscribes(domain = Mailgun.domain)
       Mailgun::Unsubscribe.new(self, domain)
     end
@@ -92,7 +96,8 @@ module Mailgun
                   :protocol,
                   :mailgun_host,
                   :test_mode,
-                  :domain
+                  :domain,
+                  :campaign
 
     def configure
       yield self
