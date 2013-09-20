@@ -19,3 +19,5 @@ startup.rb
 Guardfile
 .DS_Store
 lib/startup.rb
+.ruby-version
+.ruby-gemset
