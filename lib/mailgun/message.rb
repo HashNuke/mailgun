@@ -8,7 +8,7 @@ module Mailgun
     # send email
     def send_email(parameters={})
       # options:
-      # :from, :to, :cc, :bcc, :subject, :text, :html 
+      # :from, :to, :cc, :bcc, :subject, :text, :html
       # :with_attachment
       # :with_attachments
       # :at for delayed delivery time option

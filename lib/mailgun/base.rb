@@ -29,15 +29,15 @@ module Mailgun
     def messages(domain = Mailgun.domain)
       @messages ||= Mailgun::Message.new(self, domain)
     end
-    
+
     def routes
       @routes ||= Mailgun::Route.new(self)
     end
-    
+
     def bounces(domain = Mailgun.domain)
       Mailgun::Bounce.new(self, domain)
     end
-    
+
     def domains
       Mailgun::Domain.new(self)
     end

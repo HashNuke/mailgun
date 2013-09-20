@@ -17,14 +17,14 @@ Mailgun exposes the following resources:
   * Complaints
   * Domain management
 
-Patches are welcome (and easy!). 
+Patches are welcome (and easy!).
 
 ## Sending mail using ActionMailer
 
 If you simply want to send mail using Mailgun, just set the smtp settings in the Rails application like the following. Replace wherever necessary in the following snippet :)
 ```ruby
 ActionMailer::Base.smtp_settings = {
-  :port           => 587, 
+  :port           => 587,
   :address        => 'smtp.mailgun.org',
   :user_name      => 'postmaster@your.mailgun.domain',
   :password       => 'mailgun-smtp-password',
