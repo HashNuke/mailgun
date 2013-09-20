@@ -15,7 +15,3 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
-startup.rb
-Guardfile
-.DS_Store
-lib/startup.rb
