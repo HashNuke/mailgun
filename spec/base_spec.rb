@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Mailgun::Base do
 
+  subject { Mailgun(api_key: ENV["MAILGUN_API_KEY"]) }
+
   it "should raise an error if the api_key has not been set" do
     expect do
       Mailgun()
@@ -9,7 +11,7 @@ describe Mailgun::Base do
   end
 
   it "can be called directly if the api_key has been set via Mailgun.configure" do
-    Mailgun.config { |c| c.api_key = "some-junk-string" }
+    Mailgun.config { |c| c.api_key = ENV["MAILGUN_API_KEY"] }
     expect do
       Mailgun()
     end.not_to raise_error()
@@ -17,41 +19,32 @@ describe Mailgun::Base do
 
   it "can be instanced with the api_key as a param" do
     expect do
-      Mailgun({:api_key => "some-junk-string"})
+      Mailgun(api_key: ENV["MAILGUN_API_KEY"])
     end.not_to raise_error()
   end
 
   describe "Mailgun.new" do
     it "Mailgun() method should return a new Mailgun object" do
-      mailgun = Mailgun({:api_key => "some-junk-string"})
-      mailgun.should be_kind_of(Mailgun::Base)
+      subject.should be_kind_of(Mailgun::Base)
     end
   end
 
   describe "resources" do
-    before :each do
-      @mailgun = Mailgun({:api_key => "some-junk-string"})
-    end
-
     it "Mailgun#mailboxes should return an instance of Mailgun::Mailbox" do
-      @mailgun.mailboxes.should be_kind_of(Mailgun::Mailbox)
+      subject.mailboxes.should be_kind_of(Mailgun::Mailbox)
     end
 
     it "Mailgun#routes should return an instance of Mailgun::Route" do
-      @mailgun.routes.should be_kind_of(Mailgun::Route)
+      subject.routes.should be_kind_of(Mailgun::Route)
     end
   end
 
 
   
   describe "internal helper methods" do
-    before :each do
-      @mailgun = Mailgun({:api_key => "some-junk-string"})
-    end
-
     describe "Mailgun#base_url" do
       it "should return https url if use_https is true" do
-      @mailgun.base_url.should == "https://api:#{Mailgun.api_key}@#{Mailgun.mailgun_host}/#{Mailgun.api_version}"
+        subject.base_url.should == "https://api:#{Mailgun.api_key}@#{Mailgun.mailgun_host}/#{Mailgun.api_version}"
       end
     end
 
@@ -90,7 +83,7 @@ describe Mailgun::Base do
     describe "setting configurations" do
       before(:each) do
         Mailgun.configure do |c|
-          c.api_key = 'some-api-key'
+          c.api_key = ENV["MAILGUN_API_KEY"]
           c.api_version = 'v2'
           c.protocol = 'https'
           c.mailgun_host = 'api.mailgun.net'
@@ -100,7 +93,7 @@ describe Mailgun::Base do
       end
 
       it "allows me to set my API key easily" do
-        Mailgun.api_key.should eql 'some-api-key'
+        Mailgun.api_key.should eql ENV["MAILGUN_API_KEY"]
       end
 
       it "allows me to set the api_version attribute" do
