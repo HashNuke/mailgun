@@ -17,7 +17,10 @@
   * Support for domains API
 
 * Scott Carleton / [@scotterc](http://github.com/scotterc)
-  * new functionality and improvements
+  * New functionality and improvements
+
+* Sean Grove / [@sgrove](http://github.com/sgrove)
+  * Some initial work on the gem
 
 * Yomi Colledge / [@baphled](http://github.com/baphled)
   * For refactoring API configuration and some documentation

@@ -181,21 +181,23 @@ Supported route actions are: `:forward`, and `:stop`
 @mailbox.domains.delete "example.com"
 ```
 
-## Making Your Changes
+## Running tests
 
-  * Fork the project (Github has really good step-by-step directions)
+`bundle exec rspec spec`
 
-  * Start a feature/bugfix branch
+## Contributing
 
-  * Commit and push until you are happy with your contribution
+* Fork the project (Github has really good step-by-step directions)
 
-  * Make sure to add tests for it. This is important so we don't break it in a future version unintentionally.
+* Start a feature/bugfix branch
 
-  * After making your changes, be sure to run the Mailgun tests using the `rspec spec` to make sure everything works.
+* Commit and push until you are happy with your contribution
 
-  * Submit your change as a Pull Request and update the GitHub issue to let us know it is ready for review.
+* Make sure to add tests for it. This is important so we don't break it in a future version unintentionally.
 
+* After making your changes, be sure to run the Mailgun tests using the `bundle exec rspec spec` to make sure everything works.
 
+* Submit your change as a Pull Request and update the GitHub issue to let us know it is ready for review.
 
 
 ## TODO
