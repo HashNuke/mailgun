@@ -12,13 +12,13 @@ describe Mailgun::Base do
     Mailgun.config { |c| c.api_key = "some-junk-string" }
     expect do
       Mailgun()
-    end.to_not raise_error ArgumentError
+    end.not_to raise_error()
   end
 
   it "can be instanced with the api_key as a param" do
     expect do
       Mailgun({:api_key => "some-junk-string"})
-    end.to_not raise_error ArgumentError
+    end.not_to raise_error()
   end
 
   describe "Mailgun.new" do

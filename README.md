@@ -196,9 +196,10 @@ Supported route actions are: `:forward`, and `:stop`
   * Submit your change as a Pull Request and update the GitHub issue to let us know it is ready for review.
 
 
+
+
 ## TODO
 
-  * Mailgun() is overwriting api key. api key is not persisting
   * Add skip and limit functionality
   * Distinguish failed in logs
   * Distinguish delivered in logs
