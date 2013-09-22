@@ -152,9 +152,9 @@ parameters = {
 # Update a route via its id
 # (all keys are optional)
 @mailgun.routes.update "4e97c1b2ba8a48567f007fb6", {
-     :priority => 2,
-     :filter   => [:match_header, :subject, "*.support"],
-     :actions  => [[:forward, "http://new-site.com/incoming-emails"]]
+     :priority   => 2,
+     :expression => [:match_header, :subject, "*.support"],
+     :actions    => [[:forward, "http://new-site.com/incoming-emails"]]
      }
 
 # Destroy a route via its id
