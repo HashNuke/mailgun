@@ -1,3 +1,5 @@
+# Contributors
+
 * Alan deLevie / ([@adelevie](http://github.com/adelevie))
   * Sending email
 
@@ -10,11 +12,15 @@
 * Kaz Walker / [@KazW](http://github.com/KazW>)
   * Syntax highlighting for readme
 
-* [@mirzac](http://github.com/mirzac>)
-  * Fix to accept domain in options
 
 * [@kdayton-](http://github.com/kdayton->)
   * Support for domains API
+
+* [@mirzac](http://github.com/mirzac>)
+  * Fix to accept domain in options
+
+* [polysign](http://github.com/polysign)
+  * Support for campaigns API
 
 * Scott Carleton / [@scotterc](http://github.com/scotterc)
   * New functionality and improvements
