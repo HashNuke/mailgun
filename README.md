@@ -202,7 +202,9 @@ Supported route actions are: `:forward`, and `:stop`
 
 ## Running tests
 
-`bundle exec rspec spec`
+You'll need your Mailgun API key. You can get one by signing up at <http://mailgun.com>
+
+`MAILGUN_API_KEY=api-key bundle exec rspec spec`
 
 ## Contributing
 
