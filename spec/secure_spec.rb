@@ -36,6 +36,14 @@ describe Mailgun::Secure do
     result.should be_false
   end
   
+  it "check_request_auth should return true for an authentication generated any time when the check offset is 0" do
+    timestamp, token, signature = generate_request_auth("some-api-key", -6)
+    
+    result = @mailgun.secure.check_request_auth(timestamp, token, signature, 0)
+    
+    result.should be_true
+  end
+  
   it "check_request_auth should return false for a different api key, token or signature" do
     timestamp, token, signature = generate_request_auth("some-different-api-key")
     

@@ -16,8 +16,10 @@ module Mailgun
     
     # check request auth
     def check_request_auth(timestamp, token, signature, offset=-5)
-      offset = Time.now.to_i + offset * 60
-      return false if timestamp < offset
+      if offset != 0
+        offset = Time.now.to_i + offset * 60
+        return false if timestamp < offset
+      end
       
       return signature == OpenSSL::HMAC.hexdigest(
         OpenSSL::Digest::Digest.new('sha256'),
