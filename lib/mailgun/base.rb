@@ -61,6 +61,10 @@ module Mailgun
     def list_members(address)
       Mailgun::MailingList::Member.new(self, address)
     end
+    
+    def secure
+      Mailgun::Secure.new(self)
+    end
   end
 
 
