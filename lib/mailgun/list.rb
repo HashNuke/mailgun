@@ -37,6 +37,10 @@ module Mailgun
     	Mailgun.submit :delete, list_url(address)
     end
 
+    def create_members(address, members, options={})
+      params = {:members => members.to_json}
+      Mailgun.submit :post, list_url(address) + '/members.json', params.merge(options)
+    end
 
     private
 
