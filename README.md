@@ -87,19 +87,19 @@ parameters = {
 #### Mailing List Members
 ```ruby
 # List all members within a mailing list
-@mailgun.list_members.list "devs@your.mailgun.domain"
+@mailgun.list_members("devs@your.mailgun.domain").list
 
 # Find a particular member in a list
-@mailgun.list_members.find "devs@your.mailgun.domain", "bond@mi6.co.uk"
+@mailgun.list_members("devs@your.mailgun.domain").find "bond@mi6.co.uk"
 
 # Add a member to a list
-@mailgun.list_members.add "devs@your.mailgun.domain", "Q@mi6.co.uk"
+@mailgun.list_members("devs@your.mailgun.domain").add "Q@mi6.co.uk"
 
 # Update a member on a list
-@mailgun.list_members.update "devs@your.mailgun.domain", "Q@mi6.co.uk", "Q", {:gender => 'male'}.to_json, :subscribed => 'no')
+@mailgun.list_members("devs@your.mailgun.domain").update  "Q@mi6.co.uk", "Q", {:gender => 'male'}.to_json, :subscribed => 'no')
 
 # Remove a member from a list
-@mailgun.list_members.remove "devs@your.mailgun.domain", "M@mi6.co.uk"
+@mailgun.list_members("devs@your.mailgun.domain").remove  "M@mi6.co.uk"
 ```
 
 #### Mailboxes
