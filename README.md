@@ -181,6 +181,23 @@ Supported route actions are: `:forward`, and `:stop`
 @mailbox.domains.delete "example.com"
 ```
 
+
+#### Events
+```ruby
+# Initialize your Mailgun object:
+@mailgun = Mailgun(:api_key => 'your-api-key')
+
+# Setup some paramters
+parameters = {
+   :end   => "Wed, 15 Feb 2012 13:03:31 GMT",
+   :event   => 'stored'
+}
+
+# Send the request
+@mailgun.events.list parameters
+```
+
+
 ## Making Your Changes
 
   * Fork the project (Github has really good step-by-step directions)
