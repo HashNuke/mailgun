@@ -15,14 +15,34 @@ module Mailgun
       # :in_test_mode BOOL. override the @use_test_mode setting
       # :tags to add tags to the email
       # :track BOOL
-      Mailgun.submit(:post, messages_url, parameters)
+      Mailgun.submit(:post, send_messages_url, parameters)
     end
 
-    #private
+    # receive email
+    def fetch_email( key )
+      # options:
+      # key is the identifier returned in the events call
+      # for a stored email
+      Mailgun.submit(:get, fetch_messages_url+"/"+key)
+    end
+
+    # delete email
+    def delete_email( key )
+      # options:
+      # key is the identifier returned in the events call
+      # for a stored email
+      Mailgun.submit(:delete, fetch_messages_url+"/"+key)
+    end
+
+    private
 
     # Helper method to generate the proper url for Mailgun message API calls
-    def messages_url
+    def send_messages_url
       "#{@mailgun.base_url}/#{@domain}/messages"
+    end
+
+    def fetch_messages_url
+      "#{@mailgun.base_url}/domains/#{@domain}/messages"
     end
   end
 end
