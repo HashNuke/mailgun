@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mailgun::Log do
+describe Mailgun::Message do
 
   before :each do
     @mailgun = Mailgun({:api_key => "api-key"})   # used to get the default values
@@ -10,6 +10,8 @@ describe Mailgun::Log do
       :name   => "test",
       :domain => "sample.mailgun.org"
     }
+
+    @sample_message_key = "WyI3MDhjODgwZTZlIiwgIjF6"
   end
 
   describe "send email" do
@@ -30,10 +32,42 @@ describe Mailgun::Log do
         :from => "lumberg.bill@initech.mailgun.domain"
       }
       Mailgun.should_receive(:submit)                            \
-        .with(:post, @mailgun.messages.messages_url, parameters) \
+        .with(:post, @mailgun.messages.send('send_messages_url'), parameters) \
         .and_return(sample_response)
 
       @mailgun.messages.send_email(parameters)
+    end
+  end
+
+  describe "get email" do
+    it "should make a GET request with the right params" do
+      sample_response = <<EOF
+{
+   "headers"=>{
+      "to"=>"lumberg.bill@initech.mailgun.domain",
+      "message-id"=>"20111114174239.25659.5817@samples.mailgun.org",
+      "from"=>"cooldev@your.mailgun.domain",
+      "subject"=>"RE: missing tps reports"
+   }
+}
+EOF
+
+      Mailgun.should_receive(:submit).
+        with(:get, @mailgun.messages.send('fetch_messages_url')+'/'+@sample_message_key).
+        and_return(sample_response)
+
+      @mailgun.messages.fetch_email @sample_message_key
+    end
+  end
+
+  describe "delete email" do
+    it "should make a DELETE request with the right params" do
+
+      Mailgun.should_receive(:submit).
+        with(:delete, @mailgun.messages.send('fetch_messages_url')+'/'+@sample_message_key).
+        and_return({})
+
+      @mailgun.messages.delete_email @sample_message_key
     end
   end
 
