@@ -4,7 +4,7 @@ module Mailgun
   # Refer - http://documentation.mailgun.net/api-bounces.html for optional params to pass
   class Event
 
-    attr_accessor :items, :page, :domain, :mailgun, :action, :options
+    attr_accessor :items, :page, :domain, :mailgun, :action, :stored_options
 
     # Used internally, called from Mailgun::Base
     def initialize(mailgun, domain)
@@ -45,11 +45,12 @@ module Mailgun
     # @returns [Array<Hash>] array of bouces
     def list(options={})
       @action = :list
-      @options = check_options
-      url = options[:url] || event_url
-      @response = Mailgun.submit(:get, url, @options)
-      @items = response["items"] || []
-      @page = response["paging"] || {}
+      @stored_options = options.dup
+      clean_options = check_options(options)
+      url = options[:url] || events_url
+      @response = ::Mailgun.submit(:get, url, clean_options)
+      @items = @response["items"] || []
+      @page = @response["paging"] || {}
       self
     end
 
@@ -58,14 +59,14 @@ module Mailgun
     # @return [Event]
     def next
       return unless next?
-      Events.send(action, options.merge(url: page["next"]))
+      @mailgun.events.send(action, stored_options.merge(url: page["next"]))
     end
 
     # Check if there is a next page
     #
     # @return [Boolean] false
     def next?
-      page["next"].present?
+      !page["next"].nil?
     end
 
     # Returns a new Event object for the prev page
@@ -73,20 +74,20 @@ module Mailgun
     # @return [Event]
     def prev
       return unless prev?
-      Event.send(action, options.merge(url: page["previous"]))
+      @mailgun.events.send(action, stored_options.merge(url: page["previous"]))
     end
 
     # Check if there is a prev page
     #
     # @return [Boolean] false
     def prev?
-      page["previous"].present?
+      !page["previous"].nil?
     end
 
     private
 
     # Helper method to generate the proper url for Mailgun mailbox API calls
-    def event_url(address=nil)
+    def events_url(address=nil)
       "#{@mailgun.base_url}/#{@domain}/events#{'/' + address if address}"
     end
 
@@ -94,21 +95,21 @@ module Mailgun
     # mailgun api definition
     def check_options(options={})
       if options[:ascending]
-        raise ArgumentError, 'Invalid type for ascending option, expected Boolean' unless options[:ascending].is_a? Boolean
+        raise ArgumentError, 'Invalid type for ascending option, expected Boolean' unless [ TrueClass, FalseClass ].include? options[:ascending].class 
         options[:ascending] = options[:ascending] ? 'yes' : 'no'
       end
       if options[:begin]
         raise ArgumentError, 'Invalid type for begin option, expected Time' unless options[:begin].is_a? Time
-        options[:begin] = options[:begin].try(:to_s)
+        options[:begin] = options[:begin].rfc2822
       end
       if options[:end]
         raise ArgumentError, 'Invalid type for end option, expected Time' unless options[:end].is_a? Time
-        options[:end] = options[:end].try(:to_s)
+        options[:end] = options[:end].rfc2822
       end
       if options[:event]
         allowed_event_types = [:accepted, :rejected, :delivered, :failed, :opened, :clicked, :unsubscribed, :complained, :stored]
         raise ArgumentError, 'Invalid type for end option, expected Time' unless options[:event].is_a? Symbol
-        raise ArgumentError, 'Invalid event type for end option, accepted types are: #{allowed_event_types.join(', ')}' unless allowed_event_types.includes? options[:event]
+        raise ArgumentError, 'Invalid event type for end option, accepted types are: #{allowed_event_types.join(', ')}' unless allowed_event_types.include? options[:event]
         options[:event] = options[:event].to_s
       end
       options

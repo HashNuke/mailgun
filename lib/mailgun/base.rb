@@ -42,6 +42,10 @@ module Mailgun
       Mailgun::Domain.new(self)
     end
 
+    def events(domain = Mailgun.domain)
+      Mailgun::Event.new(self, domain)
+    end
+    
     def unsubscribes(domain = Mailgun.domain)
       Mailgun::Unsubscribe.new(self, domain)
     end
