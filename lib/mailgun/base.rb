@@ -54,6 +54,10 @@ module Mailgun
       Mailgun::Log.new(self, domain)
     end
 
+    def events(domain=Mailgun.domain)
+      Mailgun::Events.new(self, domain)
+    end
+
     def lists
       @lists ||= Mailgun::MailingList.new(self)
     end

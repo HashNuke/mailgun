@@ -4,7 +4,7 @@ module Mailgun
     def initialize(mailgun)
       @mailgun = mailgun
     end
-    
+
     def list(options={})
       Mailgun.submit(:get, route_url, options)["items"] || []
     end
@@ -49,11 +49,11 @@ module Mailgun
 
       Mailgun.submit(:put, route_url(route_id), data)
     end
-    
+
     def destroy(route_id)
       Mailgun.submit(:delete, route_url(route_id))["id"]
     end
-    
+
     private
 
     def route_url(route_id=nil)
@@ -67,6 +67,12 @@ module Mailgun
         case action.first.to_sym
         when :forward
           _actions << "forward(\"#{action.last}\")"
+        when :store
+          if action.length > 1
+             _actions << "store(notify=#{action.last})"
+          else
+             _actions << "store()"
+          end
         when :stop
           _actions << "stop()"
         else
