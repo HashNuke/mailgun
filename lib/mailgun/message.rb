@@ -15,6 +15,13 @@ module Mailgun
       # :in_test_mode BOOL. override the @use_test_mode setting
       # :tags to add tags to the email
       # :track BOOL
+
+      # TODO: check addresses for proper format:
+      # display-name <local-part@domain.tld>
+      # display-name should be enclosed in quotes
+      # to escape these characters ()<>[]:;,@\
+      # and not contain any control characters
+
       Mailgun.submit(:post, send_messages_url, parameters)
     end
 
