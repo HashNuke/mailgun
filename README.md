@@ -181,6 +181,12 @@ Supported route actions are: `:forward`, and `:stop`
 @mailbox.domains.delete "example.com"
 ```
 
+#### Stats
+```ruby
+# List all stats (100 limit)
+@mailgun.stats.list
+
+
 ## Making Your Changes
 
   * Fork the project (Github has really good step-by-step directions)
