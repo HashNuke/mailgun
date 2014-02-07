@@ -38,6 +38,10 @@ module Mailgun
       Mailgun::Bounce.new(self, domain)
     end
 
+    def stats(domain = Mailgun.domain)
+      Mailgun::Stat.new(self, domain)
+    end
+
     def domains
       Mailgun::Domain.new(self)
     end

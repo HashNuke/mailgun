@@ -20,7 +20,7 @@ describe Mailgun::Bounce do
       Mailgun.should_receive(:submit).
         with(:get, bounces_url, {}).
         and_return(sample_response)
-    
+
       @mailgun.bounces(@sample[:domain]).list
     end
   end
