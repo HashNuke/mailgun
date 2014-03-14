@@ -27,7 +27,7 @@ module Mailgun
       @items.count > 0
     end
 
-    #private
+    private
 
     def address(uri)
       URI.parse(uri).path.split("/").last if uri
