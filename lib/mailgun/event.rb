@@ -24,7 +24,7 @@ module Mailgun
     end
 
     def next?
-      @items.count > 0
+      @stored_options[:address] != address(@page["next"])
     end
 
     private
