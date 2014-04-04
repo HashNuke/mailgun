@@ -1,0 +1,16 @@
+= Multimap
+
+A Ruby multimap implementation that also includes multiset and nested multimap implementations.
+
+== Example
+
+  require 'multimap'
+
+  map = Multimap.new
+  map["a"] = 100
+  map["b"] = 200
+  map["a"] = 300
+
+  map["a"]                              # -> [100, 300]
+  map["b"]                              # -> [200]
+  map.keys                              # -> #<Multiset: {"a", "a", "b"}>
