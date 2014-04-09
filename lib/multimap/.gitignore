@@ -1,0 +1,4 @@
+*.bundle
+coverage/
+html/
+tmp/
