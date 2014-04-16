@@ -1,5 +1,8 @@
 require "rest-client"
 require "json"
+require "multimap/lib/multimap"
+require "multimap/lib/multiset"
+require "multimap/lib/nested_multimap"
 
 require "mailgun/mailgun_error"
 require "mailgun/base"
