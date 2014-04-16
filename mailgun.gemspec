@@ -13,9 +13,8 @@ Gem::Specification.new do |gem|
   gem.name          = "mailgun"
   gem.require_paths = ["lib"]
   gem.version       = "0.7"
-  
+
   gem.add_dependency(%q<rest-client>, [">= 0"])
-  gem.add_dependency(%q<multimap>, [">= 0"])
 
   gem.add_development_dependency(%q<rspec>, [">= 2"])
   gem.add_development_dependency(%q<debugger>, [">= 0"])
