@@ -165,6 +165,43 @@ Supported route filters are: `:match_header`, `:match_recipient`, and `:catch_al
 
 Supported route actions are: `:forward`, and `:stop`
 
+#### Events
+```ruby
+event = @mailgun.events.list
+
+# List last events (100 limit)
+event.items
+
+# List next page events
+event.next.items if event.next?
+
+# List prev page events
+event.prev.items if event.prev?
+
+# Get all events
+all_events = event.items
+while event.next?
+  event = event.next
+  all_events += events.items
+end
+
+# Use filters
+event = @mailgun.events.list(
+  event: :bounced,
+  from: 'your@email.com',
+  limit: 100,
+  begin: Time.zone.now - 3.day,
+  end: Time.zone.now - 2.day,
+  ascending: true
+)
+event.items
+
+```
+
+Supported list filter are: `:event`, `:list`, `:attachment`, `:from`, `:subject`, `:to`, `:from`, `:size`, `:recipient`
+
+Supported list options are: `:limit`, `:begin`, `:end`, `:ascending`
+
 
 #### Domains
 ```ruby
