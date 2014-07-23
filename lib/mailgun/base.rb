@@ -13,7 +13,7 @@ module Mailgun
       Mailgun.api_version     = options.fetch(:api_version)     { "v2"  }
       Mailgun.test_mode       = options.fetch(:test_mode)       { false }
       Mailgun.api_key         = options.fetch(:api_key)         { raise ArgumentError.new(":api_key is a required argument to initialize Mailgun") if Mailgun.api_key.nil?}
-      Mailgun.domain          = options.fetch(:domain)          { nil }
+      @domain = options.fetch(:domain)
     end
 
     # Returns the base url used in all Mailgun API calls
@@ -22,39 +22,43 @@ module Mailgun
     end
 
     # Returns an instance of Mailgun::Mailbox configured for the current API user
-    def mailboxes(domain = Mailgun.domain)
+    def mailboxes(domain = @domain)
       Mailgun::Mailbox.new(self, domain)
     end
 
-    def messages(domain = Mailgun.domain)
+    def messages(domain = @domain)
       @messages ||= Mailgun::Message.new(self, domain)
     end
 
-    def events(domain = Mailgun.domain)
+    def events(domain = @domain)
       @events ||= Mailgun::Event.new(self, domain)
     end
-    
+
     def routes
       @routes ||= Mailgun::Route.new(self)
     end
-    
-    def bounces(domain = Mailgun.domain)
+
+    def bounces(domain = @domain)
       Mailgun::Bounce.new(self, domain)
     end
-    
+
     def domains
       Mailgun::Domain.new(self)
     end
 
-    def unsubscribes(domain = Mailgun.domain)
+    def campaigns(domain = @domain)
+      Mailgun::Campaign.new(self, domain)
+    end
+
+    def unsubscribes(domain = @domain)
       Mailgun::Unsubscribe.new(self, domain)
     end
 
-    def complaints(domain = Mailgun.domain)
+    def complaints(domain = @domain)
       Mailgun::Complaint.new(self, domain)
     end
 
-    def log(domain=Mailgun.domain)
+    def log(domain=@domain)
       Mailgun::Log.new(self, domain)
     end
 
