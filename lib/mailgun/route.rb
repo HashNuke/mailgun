@@ -37,7 +37,7 @@ module Mailgun
         data[key] = params[key] if params.has_key?(key)
       end
 
-      data['expression'] = build_filter(params['expression']) if params.has_key?('expression')
+      data['expression'] = build_filter(params[:expression]) if params.has_key?(:expression)
 
       if params.has_key?('actions')
         actions = build_actions(params['actions'])
