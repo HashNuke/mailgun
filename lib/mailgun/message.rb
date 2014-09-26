@@ -41,6 +41,17 @@ module Mailgun
       Mailgun.submit(:delete, fetch_messages_url+"/"+key)
     end
 
+    def fetch_email_attachment( key, fidx )
+      # options:
+      # key is the identifier returned in the events call
+      # for a stored email
+      # fidx is the index of the attachment (from the
+      # original message
+
+      # There is no JSON response here ... just the file
+      RestClient.send(:get, fetch_messages_url+"/"+key+"/attachments/#{fidx}")
+    end
+
     private
 
     # Helper method to generate the proper url for Mailgun message API calls
