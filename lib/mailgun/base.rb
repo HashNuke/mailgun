@@ -72,7 +72,8 @@ module Mailgun
   def self.submit(method, url, parameters={})
     begin
       parameters = {:params => parameters} if method == :get
-      return JSON(RestClient.send(method, url, parameters))
+      return JSON(RestClient::Request.execute(url: url, ssl_version: 'TLS', method: method, payload: parameters))
+      # return JSON(RestClient.send(method, url, parameters))
     rescue => e
       error_message = nil
       if e.respond_to? :http_body
