@@ -26,6 +26,8 @@ module Mailgun
         data['action'] = action
       end
 
+      data = data.to_hash
+
       # TODO: Raise an error or return false if unable to create route
       Mailgun.submit(:post, route_url, data)["route"]["id"]
     end
