@@ -61,7 +61,7 @@ module Mailgun
     def list_members(address)
       Mailgun::MailingList::Member.new(self, address)
     end
-    
+
     def secure
       Mailgun::Secure.new(self)
     end
@@ -72,7 +72,7 @@ module Mailgun
   def self.submit(method, url, parameters={})
     begin
       parameters = {:params => parameters} if method == :get
-      return JSON(RestClient.send(method, url, parameters))
+      return JSON.parse(RestClient.send(method, url, parameters))
     rescue => e
       error_message = nil
       if e.respond_to? :http_body
