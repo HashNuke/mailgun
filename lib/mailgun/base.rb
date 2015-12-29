@@ -10,7 +10,7 @@ module Mailgun
     def initialize(options)
       Mailgun.mailgun_host    = options.fetch(:mailgun_host)    {"api.mailgun.net"}
       Mailgun.protocol        = options.fetch(:protocol)        { "https"  }
-      Mailgun.api_version     = options.fetch(:api_version)     { "v2"  }
+      Mailgun.api_version     = options.fetch(:api_version)     { "v3"  }
       Mailgun.test_mode       = options.fetch(:test_mode)       { false }
       Mailgun.api_key         = options.fetch(:api_key)         { raise ArgumentError.new(":api_key is a required argument to initialize Mailgun") if Mailgun.api_key.nil?}
       Mailgun.domain          = options.fetch(:domain)          { nil }
@@ -74,16 +74,21 @@ module Mailgun
       parameters = {:params => parameters} if method == :get
       return JSON.parse(RestClient.send(method, url, parameters))
     rescue => e
-      error_message = nil
-      if e.respond_to? :http_body
-        begin
-          error_message = JSON(e.http_body)["message"]
-        rescue
-          raise e
+      begin
+        error_code = e.http_code
+        error_message = JSON(e.http_body)["message"]
+        error = Mailgun::Error.new(
+          :code => error_code || nil,
+          :message => error_message || nil
+        )
+        if error.handle.kind_of? Mailgun::ErrorBase
+          raise error
+        else
+          return error.handle
         end
-        raise Mailgun::Error.new(error_message)
+      rescue
+        raise e
       end
-      raise e
     end
   end
 
