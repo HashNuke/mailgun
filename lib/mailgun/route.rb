@@ -41,13 +41,15 @@ module Mailgun
 
       data['expression'] = build_filter(params[:expression]) if params.has_key?(:expression)
 
-      if params.has_key?('actions')
+      if params.stringify_keys.has_key?('actions')
         actions = build_actions(params['actions'])
 
         actions.each do |action|
           data['action'] = action
         end
       end
+      
+      data = data.to_hash
 
       Mailgun.submit(:put, route_url(route_id), data)
     end
