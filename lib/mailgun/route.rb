@@ -34,14 +34,16 @@ module Mailgun
 
     def update(route_id, params)
       data = ::Multimap.new
+      
+      params.stringify_keys!
 
       ['priority', 'description'].each do |key|
         data[key] = params[key] if params.has_key?(key)
       end
 
-      data['expression'] = build_filter(params[:expression]) if params.has_key?(:expression)
+      data['expression'] = build_filter(params['expression']) if params.has_key?('expression')
 
-      if params.stringify_keys.has_key?('actions')
+      if params.has_key?('actions')
         actions = build_actions(params['actions'])
 
         actions.each do |action|
