@@ -8,16 +8,16 @@ module Mailgun
     # * Test mode - if enabled, doesn't actually send emails (see http://documentation.mailgun.net/user_manual.html#sending-in-test-mode)
     # * Domain - domain to use
     def initialize(options)
-      Mailgun.mailgun_host          = options.fetch(:mailgun_host)         {"api.mailgun.net"}
-      Mailgun.protocol              = options.fetch(:protocol)             { "https"  }
-      Mailgun.api_version           = options.fetch(:api_version)          { "v3"  }
-      Mailgun.test_mode             = options.fetch(:test_mode)            { false }
-      Mailgun.api_key               = options.fetch(:api_key)              { raise ArgumentError.new(":api_key is a required argument to initialize Mailgun") if Mailgun.api_key.nil?}
-      Mailgun.api_pub_key           = options.fetch(:api_pub_key)          { raise ArgumentError.new(":api_pub_key is a required argument to initialize Mailgun") if Mailgun.api_pub_key.nil?}
-      Mailgun.domain                = options.fetch(:domain)               { nil }
-      Mailgun.mailgun_webhook_url   = options.fetch(:mailgun_webhook_url)  { nil }
-      Mailgun.mailgun_url           = options.fetch(:mailgun_url)          { nil }
-      Mailgun.mailgun_authorization = options.fetch(:mailgun_authorization){ nil }
+      Mailgun.mailgun_host          = options.fetch(:mailgun_host)           { "api.mailgun.net" }
+      Mailgun.protocol              = options.fetch(:protocol)               { "https"  }
+      Mailgun.api_version           = options.fetch(:api_version)            { "v3"  }
+      Mailgun.test_mode             = options.fetch(:test_mode)              { false }
+      Mailgun.api_key               = options.fetch(:api_key)                { raise ArgumentError.new(":api_key is a required argument to initialize Mailgun") if Mailgun.api_key.nil? }
+      Mailgun.api_pub_key           = options.fetch(:api_pub_key)            { raise ArgumentError.new(":api_pub_key is a required argument to initialize Mailgun") if Mailgun.api_pub_key.nil? }
+      Mailgun.domain                = options.fetch(:domain)                 { nil }
+      Mailgun.mailgun_webhook_url   = options.fetch(:mailgun_webhook_url)    { nil }
+      Mailgun.mailgun_url           = options.fetch(:mailgun_url)            { nil }
+      Mailgun.mailgun_authorization = options.fetch(:mailgun_authorization)  { nil }
     end
 
     # Returns the base url used in all Mailgun API calls
@@ -121,7 +121,7 @@ module Mailgun
                   :api_pub_key,
                   :mailgun_webhook_url,
                   :mailgun_url,
-                  :mailgun_authorization
+                  :mailgun_authorization,
 
     def configure
       yield self
