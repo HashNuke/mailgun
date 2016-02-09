@@ -7,19 +7,26 @@ module Mailgun
     # * API key and version
     # * Test mode - if enabled, doesn't actually send emails (see http://documentation.mailgun.net/user_manual.html#sending-in-test-mode)
     # * Domain - domain to use
+    # * Webhook URL - default url to use if one is not specified in each request
+    # * Public API Key - used for address endpoint
     def initialize(options)
-      Mailgun.mailgun_host    = options.fetch(:mailgun_host)    {"api.mailgun.net"}
-      Mailgun.protocol        = options.fetch(:protocol)        { "https"  }
-      Mailgun.api_version     = options.fetch(:api_version)     { "v3"  }
+      Mailgun.mailgun_host    = options.fetch(:mailgun_host)    { "api.mailgun.net" }
+      Mailgun.protocol        = options.fetch(:protocol)        { "https" }
+      Mailgun.api_version     = options.fetch(:api_version)     { "v3" }
       Mailgun.test_mode       = options.fetch(:test_mode)       { false }
-      Mailgun.api_key         = options.fetch(:api_key)         { raise ArgumentError.new(":api_key is a required argument to initialize Mailgun") if Mailgun.api_key.nil?}
+      Mailgun.api_key         = options.fetch(:api_key)         { raise ArgumentError.new(":api_key is a required argument to initialize Mailgun") if Mailgun.api_key.nil? }
       Mailgun.domain          = options.fetch(:domain)          { nil }
       Mailgun.webhook_url     = options.fetch(:webhook_url)     { nil }
+      Mailgun.public_api_key  = options.fetch(:public_api_key)  { nil }
     end
 
     # Returns the base url used in all Mailgun API calls
     def base_url
       "#{Mailgun.protocol}://api:#{Mailgun.api_key}@#{Mailgun.mailgun_host}/#{Mailgun.api_version}"
+    end
+
+    def public_base_url
+      "#{Mailgun.protocol}://api:#{Mailgun.public_api_key}@#{Mailgun.mailgun_host}/#{Mailgun.api_version}"
     end
 
     # Returns an instance of Mailgun::Mailbox configured for the current API user
@@ -51,8 +58,11 @@ module Mailgun
       Mailgun::Webhook.new(self, domain, webhook_url)
     end
 
-    def validations(domain = Mailgun.domain)
-      Mailgun::Validation.new(self, domain)
+    def addresses(domain = Mailgun.domain)
+      if Mailgun.public_api_key.nil?
+        raise ArgumentError.new(":public_api_key is a required argument to validate addresses")
+      end
+      Mailgun::Address.new(self)
     end
 
     def complaints(domain = Mailgun.domain)
@@ -112,6 +122,7 @@ module Mailgun
                   :test_mode,
                   :domain,
                   :webhook_url,
+                  :public_api_key
 
     def configure
       yield self
