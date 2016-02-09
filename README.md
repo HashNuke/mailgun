@@ -17,6 +17,7 @@ Mailgun exposes the following resources:
   * Complaints
   * Domain management
   * Webhook management
+  * Address Validation
 
 Patches are welcome (and easy!).
 
@@ -203,6 +204,13 @@ Supported route actions are: `:forward`, and `:stop`
 # Deletes an existing webhook
 # Note: Deleting an Open or Click webhook will disable Open or Click tracking
 @mailgun.webhooks.delete(:open)
+```
+
+#### Address Validation
+Requires the `public_api_key` to be set.  The Mailgun public key is available in the My Account tab of the Control Panel.
+```ruby
+# Given an arbitrary address, validates address based off defined checks
+@mailgun.addresses.validate('hello@example.com')
 ```
 
 ## Making Your Changes
