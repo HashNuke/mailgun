@@ -21,3 +21,7 @@
 
 * Yomi Colledge / [@baphled](http://github.com/baphled)
   * For refactoring API configuration and some documentation
+
+* Gregory Hilkert / [@EpiphanyMachine](http://github.com/EpiphanyMachine) and [@asheeshchoksi](https://github.com/asheeshchoksi)
+  * Support for Webhooks API
+  * Support for Address API
