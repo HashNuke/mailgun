@@ -16,6 +16,7 @@ Mailgun exposes the following resources:
   * Unsubscribes
   * Complaints
   * Domain management
+  * Webhook management
 
 Patches are welcome (and easy!).
 
@@ -179,6 +180,29 @@ Supported route actions are: `:forward`, and `:stop`
 
 # Remove a domain
 @mailbox.domains.delete "example.com"
+```
+
+#### Webhooks
+```ruby
+# List of currently available webhooks
+@mailgun.webhooks.available_ids
+
+# Returns a list of webhooks set for the specified domain
+@mailgun.webhooks.list
+
+# Returns details about a the webhook specified in the URL
+@mailgun.webhooks.find(:open)
+
+# Creates a new webhook
+# Note: Creating an Open or Click webhook will enable Open or Click tracking
+@mailgun.webhooks.create(:open, "http://bin.example.com/8de4a9c4")
+
+# Updates an existing webhook
+@mailgun.webhooks.update(:open, "http://bin.example.com/8de4a9c4")
+
+# Deletes an existing webhook
+# Note: Deleting an Open or Click webhook will disable Open or Click tracking
+@mailgun.webhooks.delete(:open)
 ```
 
 ## Making Your Changes

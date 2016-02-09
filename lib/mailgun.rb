@@ -18,16 +18,12 @@ require "mailgun/list"
 require "mailgun/list/member"
 require "mailgun/message"
 require "mailgun/secure"
-require "mailgun/validation"
 
 #require "startup"
 
 def Mailgun(options={})
-  options[:api_key]               = Mailgun.api_key               if Mailgun.api_key
-  options[:domain]                = Mailgun.domain                if Mailgun.domain
-  options[:api_pub_key]           = Mailgun.api_pub_key           if Mailgun.api_pub_key
-  options[:mailgun_webhook_url]   = Mailgun.mailgun_webhook_url   if Mailgun.mailgun_webhook_url
-  options[:mailgun_url]           = Mailgun.mailgun_url           if Mailgun.mailgun_url
-  options[:mailgun_authorization] = Mailgun.mailgun_authorization if Mailgun.mailgun_authorization
+  options[:api_key] = Mailgun.api_key if Mailgun.api_key
+  options[:domain] = Mailgun.domain if Mailgun.domain
+  options[:webhook_url] = Mailgun.webhook_url if Mailgun.webhook_url
   Mailgun::Base.new(options)
 end
