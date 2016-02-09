@@ -18,7 +18,7 @@ module Mailgun
 
     # Returns a list of webhooks set for the specified domain
     def list
-      Mailgun.submit :get, webhook_url
+      Mailgun.submit(:get, webhook_url)["webhooks"] || []
     end
 
     # Returns details about a the webhook specified in the URL
