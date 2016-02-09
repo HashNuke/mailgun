@@ -21,7 +21,7 @@ module Mailgun
       Mailgun.submit(:get, webhook_url)["webhooks"] || []
     end
 
-    # Returns details about a the webhook specified in the URL
+    # Returns details about the webhook specified
     def find(id)
       Mailgun.submit :get, webhook_url(id)
     end

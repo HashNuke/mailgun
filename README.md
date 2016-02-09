@@ -191,7 +191,7 @@ Supported route actions are: `:forward`, and `:stop`
 # Returns a list of webhooks set for the specified domain
 @mailgun.webhooks.list
 
-# Returns details about the webhook specified in the URL
+# Returns details about the webhook specified
 @mailgun.webhooks.find(:open)
 
 # Creates a new webhook
