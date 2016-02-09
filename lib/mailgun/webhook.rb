@@ -49,8 +49,7 @@ module Mailgun
 
     # Helper method to generate the proper url for Mailgun webhook API calls
     def webhook_url(id=nil)
-      "#{@mailgun.base_url}/#{domain}/webhooks#{'/' + id if id}"
+      "#{@mailgun.base_url}/domains/#{domain}/webhooks#{'/' + id if id}"
     end
-
   end
 end
