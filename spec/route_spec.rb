@@ -65,10 +65,10 @@ EOF
       options[:expression]  = [:match_recipient, "sample.mailgun.org"]
       options[:action]      = [[:forward, "http://test-site.com"], [:stop]]
 
-      Mailgun.should_receive(:submit)
-        .with(:post, @mailgun.routes.send(:route_url), instance_of(Multimap))
+      expect(Mailgun).to receive(:submit)
+        .with(:post, @mailgun.routes.send(:route_url), instance_of(Hash))
         .and_return("{\"route\": {\"id\": \"@sample_route_id\"}}")
-      
+
       @mailgun.routes.create(
         options[:description],
         options[:priority],

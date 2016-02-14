@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Mailgun::Base do
 
   it "should raise an error if the api_key has not been set" do
+    Mailgun.config { |c| c.api_key = nil }
     expect do
       Mailgun()
     end.to raise_error ArgumentError
@@ -43,7 +44,7 @@ describe Mailgun::Base do
   end
 
 
-  
+
   describe "internal helper methods" do
     before :each do
       @mailgun = Mailgun({:api_key => "some-junk-string"})
@@ -57,13 +58,13 @@ describe Mailgun::Base do
 
     describe "Mailgun.submit" do
       it "should send method and arguments to RestClient" do
-        RestClient.should_receive(:test_method)
-          .with({:arg1=>"val1"},{})
-          .and_return({})
-        Mailgun.submit :test_method, :arg1=>"val1"
+        expect(RestClient).to receive(:test_method)
+          .with('/', {:arg1=>"val1"})
+          .and_return('{}')
+        Mailgun.submit :test_method, '/', :arg1=>"val1"
       end
     end
-    
+
   end
 
   describe "configuration" do
@@ -99,6 +100,8 @@ describe Mailgun::Base do
         end
       end
 
+      after(:each) { Mailgun.configure { |c| c.domain = nil } }
+
       it "allows me to set my API key easily" do
         Mailgun.api_key.should eql 'some-api-key'
       end
@@ -110,7 +113,7 @@ describe Mailgun::Base do
       it "allows me to set the protocol attribute" do
         Mailgun.protocol.should eql 'https'
       end
-      
+
       it "allows me to set the mailgun_host attribute" do
         Mailgun.mailgun_host.should eql 'api.mailgun.net'
       end
