@@ -27,6 +27,11 @@ module Mailgun
       Mailgun.submit :post, list_member_url, params.merge(options)
     end
 
+    def add_multi(members=[], options={})
+      params = {:members => members}
+      Mailgun.submit :post, list_member_json, params.merge(options)
+    end
+
     # TODO add spec?
     alias_method :create, :add
 
@@ -48,6 +53,9 @@ module Mailgun
     def list_member_url(member_address=nil)
       "#{@mailgun.base_url}/lists#{'/' + @address}/members#{'/' + member_address if member_address}"
     end
-    
+
+    def list_member_json
+      "#{@mailgun.base_url}/lists#{'/' + @address}/members.json"
+    end
   end
 end
