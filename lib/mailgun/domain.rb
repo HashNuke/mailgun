@@ -2,12 +2,11 @@ module Mailgun
 
   # Interface to manage domains
   class Domain
-
     # Used internally, called from Mailgun::Base
     def initialize(mailgun)
       @mailgun = mailgun
     end
-    
+
     # List all domains on the account
     def list(options={})
       Mailgun.submit(:get, domain_url, options)["items"] || []
@@ -29,12 +28,18 @@ module Mailgun
       Mailgun.submit :delete, domain_url(domain)
     end
 
+    # Verifies a domain from account (Check DNS Records Now from Mailgun Web UI)
+    # The method is still in beta and you will need
+    # access from Mailgun to use it
+    def verify(domain)
+      Mailgun.submit :put, "#{domain_url(domain)}/verify"
+    end
+
     private
 
     # Helper method to generate the proper url for Mailgun domain API calls
     def domain_url(domain = nil)
       "#{@mailgun.base_url}/domains#{'/' + domain if domain}"
     end
-    
   end
 end

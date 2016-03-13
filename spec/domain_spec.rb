@@ -21,7 +21,7 @@ describe Mailgun::Domain do
       Mailgun.should_receive(:submit).
         with(:get, domains_url, {}).
         and_return(sample_response)
-    
+
       @mailgun.domains.list
     end
   end
@@ -65,4 +65,16 @@ describe Mailgun::Domain do
     end
   end
 
+  describe 'verify domain' do
+    it 'should make a PUT request to verify with correct params' do
+      sample_response = "{\"domain\": {\"created_at\": \"Tue, 12 Feb 2013 20:13:49 GMT\", \"smtp_login\": \"postmaster@bample.mailgun.org\", \"name\": \"sample.mailgun.org\", \"smtp_password\": \"67bw67bz7w\", \"state\": \"active\"}, \"message\": \"Domain DNS records have been updated\", \"receiving_dns_records\": [], \"sending_dns_records\": []}"
+      verify_domain_url = "#{@mailgun.domains.send(:domain_url, @sample[:domain])}/verify"
+
+      expect(Mailgun).to receive(:submit)
+        .with(:put, verify_domain_url)
+        .and_return(sample_response)
+
+      @mailgun.domains.verify(@sample[:domain])
+    end
+  end
 end
