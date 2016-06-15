@@ -25,7 +25,7 @@ describe Mailgun::Base do
   describe "Mailgun.new" do
     it "Mailgun() method should return a new Mailgun object" do
       mailgun = Mailgun({:api_key => "some-junk-string"})
-      mailgun.should be_kind_of(Mailgun::Base)
+      expect(mailgun).to be_kind_of(Mailgun::Base)
     end
   end
 
@@ -35,15 +35,13 @@ describe Mailgun::Base do
     end
 
     it "Mailgun#mailboxes should return an instance of Mailgun::Mailbox" do
-      @mailgun.mailboxes.should be_kind_of(Mailgun::Mailbox)
+      expect(@mailgun.mailboxes).to be_kind_of(Mailgun::Mailbox)
     end
 
     it "Mailgun#routes should return an instance of Mailgun::Route" do
-      @mailgun.routes.should be_kind_of(Mailgun::Route)
+      expect(@mailgun.routes).to be_kind_of(Mailgun::Route)
     end
   end
-
-
 
   describe "internal helper methods" do
     before :each do
@@ -52,7 +50,7 @@ describe Mailgun::Base do
 
     describe "Mailgun#base_url" do
       it "should return https url if use_https is true" do
-      @mailgun.base_url.should == "https://api:#{Mailgun.api_key}@#{Mailgun.mailgun_host}/#{Mailgun.api_version}"
+      expect(@mailgun.base_url).to eq "https://api:#{Mailgun.api_key}@#{Mailgun.mailgun_host}/#{Mailgun.api_version}"
       end
     end
 
@@ -64,27 +62,26 @@ describe Mailgun::Base do
         Mailgun.submit :test_method, '/', :arg1=>"val1"
       end
     end
-
   end
 
   describe "configuration" do
     describe "default settings" do
       it "api_version is v2" do
-        Mailgun.api_version.should eql 'v3'
+        expect(Mailgun.api_version).to eql 'v3'
       end
       it "should use https by default" do
-        Mailgun.protocol.should == "https"
+        expect(Mailgun.protocol).to eq "https"
       end
       it "mailgun_host is 'api.mailgun.net'" do
-        Mailgun.mailgun_host.should eql 'api.mailgun.net'
+        expect(Mailgun.mailgun_host).to eql 'api.mailgun.net'
       end
 
       it "test_mode is false" do
-        Mailgun.test_mode.should eql false
+        expect(Mailgun.test_mode).to eql false
       end
 
       it "domain is not set" do
-        Mailgun.domain.should be_nil
+        expect(Mailgun.domain).to be_nil
       end
     end
 
@@ -103,26 +100,26 @@ describe Mailgun::Base do
       after(:each) { Mailgun.configure { |c| c.domain = nil } }
 
       it "allows me to set my API key easily" do
-        Mailgun.api_key.should eql 'some-api-key'
+        expect(Mailgun.api_key).to eql 'some-api-key'
       end
 
       it "allows me to set the api_version attribute" do
-        Mailgun.api_version.should eql 'v2'
+        expect(Mailgun.api_version).to eql 'v2'
       end
 
       it "allows me to set the protocol attribute" do
-        Mailgun.protocol.should eql 'https'
+        expect(Mailgun.protocol).to eql 'https'
       end
 
       it "allows me to set the mailgun_host attribute" do
-        Mailgun.mailgun_host.should eql 'api.mailgun.net'
+        expect(Mailgun.mailgun_host).to eql 'api.mailgun.net'
       end
       it "allows me to set the test_mode attribute" do
-        Mailgun.test_mode.should eql false
+        expect(Mailgun.test_mode).to eql false
       end
 
       it "allows me to set my domain easily" do
-        Mailgun.domain.should eql 'some-domain'
+        expect(Mailgun.domain).to eql 'some-domain'
       end
     end
   end

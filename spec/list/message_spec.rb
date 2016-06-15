@@ -16,7 +16,7 @@ describe Mailgun::Log do
     it "should make a POST request to send an email" do
 
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
-      Mailgun.should_receive(:submit)
+      expect(Mailgun).to receive(:submit)
       .with(:get, "#{@mailgun.lists.send(:list_url, @sample[:list_email])}")
       .and_return(sample_response)
 
@@ -29,7 +29,7 @@ describe Mailgun::Log do
         :text => "yeah, we're gonna need you to come in on friday...yeah.",
         :from => "lumberg.bill@initech.mailgun.domain"
       }
-      Mailgun.should_receive(:submit)                            \
+      expect(Mailgun).to receive(:submit)                            \
         .with(:post, @mailgun.messages.messages_url, parameters) \
         .and_return(sample_response)
 

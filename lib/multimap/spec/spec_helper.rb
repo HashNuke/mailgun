@@ -11,11 +11,11 @@ Spec::Matchers.define :sorted_eql do |expected|
   if defined? Rubinius
     sorter = lambda { |a, b| a.hash <=> b.hash }
     match do |actual|
-      actual.sort(&sorter).should eql(expected.sort(&sorter))
+      expect(actual.sort(&sorter)).to eql(expected.sort(&sorter))
     end
   else
     match do |actual|
-      actual.should eql(expected)
+      expect(actual).to eql(expected)
     end
   end
 end

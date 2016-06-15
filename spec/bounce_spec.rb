@@ -17,10 +17,10 @@ describe Mailgun::Bounce do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
       bounces_url = @mailgun.bounces(@sample[:domain]).send(:bounce_url)
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get, bounces_url, {}).
         and_return(sample_response)
-    
+
       @mailgun.bounces(@sample[:domain]).list
     end
   end
@@ -30,7 +30,7 @@ describe Mailgun::Bounce do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
       bounces_url = @mailgun.bounces(@sample[:domain]).send(:bounce_url, @sample[:email])
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get, bounces_url).
         and_return(sample_response)
 
@@ -43,7 +43,7 @@ describe Mailgun::Bounce do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
       bounces_url = @mailgun.bounces(@sample[:domain]).send(:bounce_url)
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:post, bounces_url, {:address => @sample[:email]} ).
         and_return(sample_response)
 
@@ -56,7 +56,7 @@ describe Mailgun::Bounce do
       sample_response = "{\"message\"=>\"Bounced address has been removed\", \"address\"=>\"postmaster@bsample.mailgun.org\"}"
       bounces_url = @mailgun.bounces(@sample[:domain]).send(:bounce_url, @sample[:email])
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:delete, bounces_url).
         and_return(sample_response)
 

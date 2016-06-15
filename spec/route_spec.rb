@@ -16,7 +16,7 @@ describe Mailgun::Route do
 }
 EOF.to_json
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get, "#{@mailgun.routes.send(:route_url)}", {}).
         and_return(sample_response)
     end
@@ -26,7 +26,7 @@ EOF.to_json
     end
 
     it "should respond with an Array" do
-      @mailgun.routes.list.should be_kind_of(Array)
+      expect(@mailgun.routes.list).to be_kind_of(Array)
     end
   end
 
@@ -48,7 +48,7 @@ EOF.to_json
 }
 EOF
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get, "#{@mailgun.routes.send(:route_url, @sample_route_id)}").
         and_return(sample_response)
 
@@ -82,7 +82,7 @@ EOF
     it "should make a PUT request with the right params" do
       options = { description: "test_route" }
 
-      Mailgun.should_receive(:submit)
+      expect(Mailgun).to receive(:submit)
         .with(:put, "#{@mailgun.routes.send(:route_url, @sample_route_id)}", { 'description' => ["test_route"] })
         .and_return("{\"id\": \"#{@sample_route_id}\"}")
       @mailgun.routes.update @sample_route_id, options
@@ -91,7 +91,7 @@ EOF
 
   describe "delete route" do
     it "should make a DELETE request with the right params" do
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:delete, "#{@mailgun.routes.send(:route_url, @sample_route_id)}").
         and_return("{\"id\": \"#{@sample_route_id}\"}")
       @mailgun.routes.destroy @sample_route_id

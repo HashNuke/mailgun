@@ -15,9 +15,9 @@ describe Mailgun::Secure do
   it "generate_request_auth helper should generate a timestamp, a token and a signature" do
     timestamp, token, signature = generate_request_auth("some-api-key")
 
-    timestamp.should_not    be_nil
-    token.length.should     == 50
-    signature.length.should == 64
+    expect(timestamp).to_not    be_nil
+    expect(token.length).to     eq 50
+    expect(signature.length).to eq 64
   end
 
   it "check_request_auth should return true for a recently generated authentication" do
