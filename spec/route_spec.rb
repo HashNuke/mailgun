@@ -80,11 +80,10 @@ EOF
 
   describe "update route" do
     it "should make a PUT request with the right params" do
-      options = {}
-      options[:description] = "test_route"
+      options = { description: "test_route" }
 
       Mailgun.should_receive(:submit)
-        .with(:put, "#{@mailgun.routes.send(:route_url, @sample_route_id)}", instance_of(Multimap))
+        .with(:put, "#{@mailgun.routes.send(:route_url, @sample_route_id)}", { 'description' => ["test_route"] })
         .and_return("{\"id\": \"#{@sample_route_id}\"}")
       @mailgun.routes.update @sample_route_id, options
     end

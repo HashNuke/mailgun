@@ -4,7 +4,7 @@ module Mailgun
     def initialize(mailgun)
       @mailgun = mailgun
     end
-    
+
     def list(options={})
       Mailgun.submit(:get, route_url, options)["items"] || []
     end
@@ -34,8 +34,8 @@ module Mailgun
 
     def update(route_id, params)
       data = ::Multimap.new
-      
-      params.stringify_keys!
+
+      params = params.map{|k,v| [k.to_s, v]}.to_h
 
       ['priority', 'description'].each do |key|
         data[key] = params[key] if params.has_key?(key)
@@ -50,16 +50,16 @@ module Mailgun
           data['action'] = action
         end
       end
-      
+
       data = data.to_hash
 
       Mailgun.submit(:put, route_url(route_id), data)
     end
-    
+
     def destroy(route_id)
       Mailgun.submit(:delete, route_url(route_id))["id"]
     end
-    
+
     private
 
     def route_url(route_id=nil)
