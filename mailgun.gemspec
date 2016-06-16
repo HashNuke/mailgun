@@ -17,6 +17,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency(%q<rest-client>, [">= 0"])
 
   gem.add_development_dependency(%q<rspec>, [">= 2"])
-  gem.add_development_dependency(%q<byebug>, [">= 0"])
-  gem.add_development_dependency(%q<vcr>, [">= 0"])
+  gem.add_development_dependency(%q<pry>, [">= 0"])
+  gem.add_development_dependency(%q<webmock>, [">= 2"])
 end

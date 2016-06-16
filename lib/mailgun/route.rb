@@ -1,6 +1,5 @@
 module Mailgun
   class Route
-
     def initialize(mailgun)
       @mailgun = mailgun
     end

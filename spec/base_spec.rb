@@ -66,7 +66,7 @@ describe Mailgun::Base do
 
   describe "configuration" do
     describe "default settings" do
-      it "api_version is v2" do
+      it "api_version is v3" do
         expect(Mailgun.api_version).to eql 'v3'
       end
       it "should use https by default" do

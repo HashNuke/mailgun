@@ -19,6 +19,7 @@ require "mailgun/list/member"
 require "mailgun/message"
 require "mailgun/secure"
 require "mailgun/address"
+require "mailgun/client"
 
 #require "startup"
 
