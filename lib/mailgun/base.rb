@@ -93,7 +93,11 @@ module Mailgun
       JSON.parse(Client.new(url).send(method, parameters))
     rescue => e
       error_code = e.http_code
-      error_message = JSON(e.http_body)["message"]
+      error_message = begin
+        JSON(e.http_body)["message"]
+      rescue JSON::ParserError
+        ''
+      end
       error = Mailgun::Error.new(
         :code => error_code || nil,
         :message => error_message || nil
