@@ -40,7 +40,20 @@ module Mailgun
 
     def make_request(request)
       set_auth(request)
-      http_client.request(request)
+      response = http_client.request(request)
+
+      check_for_errors(response)
+
+      response.body
+    end
+
+    def check_for_errors(response)
+      return if response.code == '200'
+
+      error = ClientError.new
+      error.http_code = response.code.to_i
+      error.http_body = response.body
+      raise error
     end
 
     def path
@@ -65,5 +78,12 @@ module Mailgun
     def set_auth(request)
       request.basic_auth(parsed_url.user, parsed_url.password)
     end
+  end
+end
+
+
+module Mailgun
+  class ClientError < StandardError
+    attr_accessor :http_code, :http_body
   end
 end
