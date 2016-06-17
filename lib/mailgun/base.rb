@@ -90,23 +90,18 @@ module Mailgun
   # Submits the API call to the Mailgun server
   def self.submit(method, url, parameters={})
     begin
-      parameters = {:params => parameters} if method == :get
-      return JSON.parse(Client.new(url).send(method, parameters))
+      JSON.parse(Client.new(url).send(method, parameters))
     rescue => e
-      begin
-        error_code = e.http_code
-        error_message = JSON(e.http_body)["message"]
-        error = Mailgun::Error.new(
-          :code => error_code || nil,
-          :message => error_message || nil
-        )
-        if error.handle.kind_of? Mailgun::ErrorBase
-          raise error
-        else
-          return error.handle
-        end
-      rescue
-        raise e
+      error_code = e.http_code
+      error_message = JSON(e.http_body)["message"]
+      error = Mailgun::Error.new(
+        :code => error_code || nil,
+        :message => error_message || nil
+      )
+      if error.handle.kind_of? Mailgun::ErrorBase
+        raise error.handle
+      else
+        raise error
       end
     end
   end

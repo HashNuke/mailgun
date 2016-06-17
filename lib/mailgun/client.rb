@@ -81,7 +81,6 @@ module Mailgun
   end
 end
 
-
 module Mailgun
   class ClientError < StandardError
     attr_accessor :http_code, :http_body
