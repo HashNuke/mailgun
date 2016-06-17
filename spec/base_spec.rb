@@ -55,10 +55,16 @@ describe Mailgun::Base do
     end
 
     describe "Mailgun.submit" do
-      it "should send method and arguments to RestClient" do
-        expect(RestClient).to receive(:test_method)
-          .with('/', {:arg1=>"val1"})
+      let(:client_double) { double(Mailgun::Client) }
+
+      it "should send method and arguments to Mailgun::Client" do
+        expect(Mailgun::Client).to receive(:new)
+          .with('/')
+          .and_return(client_double)
+        expect(client_double).to receive(:test_method)
+          .with({:arg1=>"val1"})
           .and_return('{}')
+
         Mailgun.submit :test_method, '/', :arg1=>"val1"
       end
     end

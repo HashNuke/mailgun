@@ -1,4 +1,3 @@
-require "rest-client"
 require "json"
 require "multimap/lib/multimap"
 require "multimap/lib/multiset"
