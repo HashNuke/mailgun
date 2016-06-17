@@ -67,7 +67,6 @@ module Mailgun
     def http_client
       http = Net::HTTP.new(mailgun_url.host, mailgun_url.port)
       http.use_ssl = true
-      http.set_debug_output STDOUT
       http
     end
 
