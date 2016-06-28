@@ -34,7 +34,7 @@ module Mailgun
     def update(route_id, params)
       data = ::Multimap.new
 
-      params = params.map{|k,v| [k.to_s, v]}.to_h
+      params = Hash[params.map{ |k, v| [k.to_s, v] }]
 
       ['priority', 'description'].each do |key|
         data[key] = params[key] if params.has_key?(key)
