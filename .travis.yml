@@ -5,6 +5,9 @@ rvm:
   - 2.2
   - 2.3.0
 
+before_install:
+  - gem install bundler
+
 cache: bundler
 
 script: bundle exec rspec --color
