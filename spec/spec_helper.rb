@@ -3,7 +3,7 @@ require 'simplecov'
 SimpleCov.start
 
 require "rspec"
-require "byebug"
+require "pry"
 require "mailgun"
 
 RSpec.configure do |config|

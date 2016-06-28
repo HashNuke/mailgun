@@ -17,7 +17,7 @@ describe Mailgun::Mailbox do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
       mailboxes_url = @mailgun.mailboxes(@sample[:domain]).send(:mailbox_url)
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get,mailboxes_url, {}).
         and_return(sample_response)
 
@@ -28,7 +28,7 @@ describe Mailgun::Mailbox do
   describe "create mailbox" do
     it "should make a POST request with the right params"	do
       mailboxes_url = @mailgun.mailboxes(@sample[:domain]).send(:mailbox_url)
-      Mailgun.should_receive(:submit)
+      expect(Mailgun).to receive(:submit)
         .with(:post, mailboxes_url,
           :mailbox  => @sample[:email],
           :password => @sample[:password])
@@ -41,7 +41,7 @@ describe Mailgun::Mailbox do
   describe "update mailbox" do
     it "should make a PUT request with the right params" do
       mailboxes_url = @mailgun.mailboxes(@sample[:domain]).send(:mailbox_url, @sample[:mailbox_name])
-      Mailgun.should_receive(:submit)
+      expect(Mailgun).to receive(:submit)
         .with(:put, mailboxes_url, :password => @sample[:password])
         .and_return({})
 
@@ -53,7 +53,7 @@ describe Mailgun::Mailbox do
   describe "destroy mailbox" do
     it "should make a DELETE request with the right params" do
       mailboxes_url = @mailgun.mailboxes(@sample[:domain]).send(:mailbox_url, @sample[:name])
-      Mailgun.should_receive(:submit)
+      expect(Mailgun).to receive(:submit)
         .with(:delete, mailboxes_url)
         .and_return({})
 

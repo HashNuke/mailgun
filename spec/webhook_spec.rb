@@ -13,7 +13,7 @@ describe Mailgun::Webhook do
 
   describe "list avabilable webhook ids" do
     it "should return the correct ids" do
-      @mailgun.webhooks.available_ids.should =~ %w(bounce deliver drop spam unsubscribe click open).map(&:to_sym)
+      expect(@mailgun.webhooks.available_ids).to match_array %i(bounce deliver drop spam unsubscribe click open)
     end
   end
 
@@ -23,7 +23,7 @@ describe Mailgun::Webhook do
       sample_response = "{\"total_count\": 1, \"items\": [{\"webhooks\":{\"open\":{\"url\":\"http://postbin.heroku.com/860bcd65\"},\"click\":{\"url\":\"http://postbin.heroku.com/860bcd65\"}}}]}"
       webhooks_url = @mailgun.webhooks.send(:webhook_url)
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get, webhooks_url).
         and_return(sample_response)
 
@@ -36,7 +36,7 @@ describe Mailgun::Webhook do
       sample_response = "{\"webhook\": {\"url\":\"http://postbin.heroku.com/860bcd65\"}"
       webhooks_url = @mailgun.webhooks.send(:webhook_url, @sample[:id])
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get, webhooks_url).
         and_return(sample_response)
 
@@ -50,7 +50,7 @@ describe Mailgun::Webhook do
         sample_response = "{\"message\":\"Webhook has been created\",\"webhook\":{\"url\":\"http://postbin.heroku.com/860bcd65\"}}"
         webhooks_url = @mailgun.webhooks.send(:webhook_url)
 
-        Mailgun.should_receive(:submit).
+        expect(Mailgun).to receive(:submit).
           with(:post, webhooks_url, {:id => @sample[:id], :url => @sample[:url]}).
           and_return(sample_response)
 
@@ -63,7 +63,7 @@ describe Mailgun::Webhook do
         webhooks_url = @mailgun.webhooks.send(:webhook_url)
         overwritten_url = 'http://mailgun.net/webhook'
 
-        Mailgun.should_receive(:submit).
+        expect(Mailgun).to receive(:submit).
           with(:post, webhooks_url, {:id => @sample[:id], :url => overwritten_url}).
           and_return(sample_response)
 
@@ -78,7 +78,7 @@ describe Mailgun::Webhook do
         sample_response = "{\"message\":\"Webhook has been updated\",\"webhook\":{\"url\":\"http://postbin.heroku.com/860bcd65\"}}"
         webhooks_url = @mailgun.webhooks.send(:webhook_url, @sample[:id])
 
-        Mailgun.should_receive(:submit).
+        expect(Mailgun).to receive(:submit).
           with(:put, webhooks_url, {:url => @sample[:url]}).
           and_return(sample_response)
 
@@ -91,7 +91,7 @@ describe Mailgun::Webhook do
         webhooks_url = @mailgun.webhooks.send(:webhook_url, @sample[:id])
         overwritten_url = 'http://mailgun.net/webhook'
 
-        Mailgun.should_receive(:submit).
+        expect(Mailgun).to receive(:submit).
           with(:put, webhooks_url, {:url => overwritten_url}).
           and_return(sample_response)
 
@@ -105,7 +105,7 @@ describe Mailgun::Webhook do
       sample_response = "{\"message\":\"Webhook has been deleted\",\"webhook\":{\"url\":\"http://postbin.heroku.com/860bcd65\"}}"
       webhooks_url = @mailgun.webhooks.send(:webhook_url, @sample[:id])
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:delete, webhooks_url).
         and_return(sample_response)
 

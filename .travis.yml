@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 2.0
+  - 2.1
+  - 2.2
+  - 2.3.0
+
+before_install:
+  - gem install bundler
+
+cache: bundler
+
+script: bundle exec rspec --color

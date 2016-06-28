@@ -29,7 +29,7 @@ EOF
 
       complaints_url = @mailgun.complaints(@sample[:domain]).send(:complaint_url)
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get, complaints_url, {}).
         and_return(sample_response)
 
@@ -49,7 +49,7 @@ EOF
 
       complaints_url = @mailgun.complaints(@sample[:domain]).send(:complaint_url)
 
-      Mailgun.should_receive(:submit)
+      expect(Mailgun).to receive(:submit)
         .with(:post, complaints_url, {:address => @sample[:email]})
         .and_return(sample_response)
 
@@ -72,7 +72,7 @@ EOF
 
       complaints_url = @mailgun.complaints(@sample[:domain]).send(:complaint_url, @sample[:email])
 
-      Mailgun.should_receive(:submit)
+      expect(Mailgun).to receive(:submit)
         .with(:get, complaints_url)
         .and_return(sample_response)
 
@@ -92,7 +92,7 @@ EOF
 
       complaints_url = @mailgun.complaints(@sample[:domain]).send(:complaint_url, @sample[:email])
 
-      Mailgun.should_receive(:submit)
+      expect(Mailgun).to receive(:submit)
         .with(:delete, complaints_url)
         .and_return(sample_response)
 

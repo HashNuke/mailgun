@@ -51,4 +51,7 @@ module Mailgun
 
   class ResquestFailed < ErrorBase
   end
+
+  class ServerError < ErrorBase
+  end
 end

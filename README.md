@@ -1,5 +1,7 @@
 # Mailgun rubygem
 
+![](https://travis-ci.org/HashNuke/mailgun.svg?branch=master)
+
 This gem allows for idiomatic Mailgun usage from within ruby. Mailgun is a kickass email-as-a-service that lets you use email as if it made sense. Check it out at http://mailgun.net
 
 Mailgun exposes the following resources:

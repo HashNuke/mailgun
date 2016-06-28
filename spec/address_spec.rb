@@ -17,7 +17,7 @@ describe Mailgun::Address do
       sample_response = "{\"is_valid\":true,\"address\":\"foo@mailgun.net\",\"parts\":{\"display_name\":null,\"local_part\":\"foo\",\"domain\":\"mailgun.net\"},\"did_you_mean\":null}"
       validate_url = mailgun.addresses.send(:address_url, 'validate')
 
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get, validate_url, {:address => @sample}).
         and_return(sample_response)
 

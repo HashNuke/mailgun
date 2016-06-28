@@ -1,4 +1,3 @@
-require "rest-client"
 require "json"
 require "multimap/lib/multimap"
 require "multimap/lib/multiset"
@@ -19,6 +18,7 @@ require "mailgun/list/member"
 require "mailgun/message"
 require "mailgun/secure"
 require "mailgun/address"
+require "mailgun/client"
 
 #require "startup"
 

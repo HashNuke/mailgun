@@ -16,7 +16,7 @@ describe Mailgun::Log do
     it "should make a GET request with the right params" do
       sample_response = "{\"items\": [{\"size_bytes\": 0,  \"mailbox\": \"postmaster@bsample.mailgun.org\" }  ]}"
       log_url = @mailgun.log(@sample[:domain]).send(:log_url)
-      Mailgun.should_receive(:submit).
+      expect(Mailgun).to receive(:submit).
         with(:get, log_url, {}).
         and_return(sample_response)
 
