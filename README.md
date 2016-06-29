@@ -96,6 +96,9 @@ parameters = {
 # Add a member to a list
 @mailgun.list_members.add "devs@your.mailgun.domain", "Q@mi6.co.uk"
 
+# Add multiple mailing list members to a list (limit 1,000 per call)
+@mailgun.list_members.add_multi "devs@your.mailgun.domain", [{"address": "Alice <alice@example.com>", "vars": {"age": 26}}, {"name": "Bob", "address": "bob@example.com", "vars": {"age": 34}}].to_json, {:upsert => true}
+    
 # Update a member on a list
 @mailgun.list_members.update "devs@your.mailgun.domain", "Q@mi6.co.uk", "Q", {:gender => 'male'}.to_json, :subscribed => 'no')
 
