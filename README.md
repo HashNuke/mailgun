@@ -242,9 +242,9 @@ Requires the `public_api_key` to be set.  The Mailgun public key is available in
   * Campaign?
 
 
-## Maintainer
+## Maintainers
 
-Akash Manohar / [@HashNuke](http://github.com/HashNuke)
+* Hairihan / [@hairihan](http://github.com/hairihan)
 
 
 ## Authors
