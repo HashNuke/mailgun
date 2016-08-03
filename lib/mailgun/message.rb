@@ -26,11 +26,12 @@ module Mailgun
     end
 
     # receive email
-    def fetch_email( key )
+    def fetch_email( url )
       # options:
       # key is the identifier returned in the events call
       # for a stored email
-      Mailgun.submit(:get, fetch_messages_url+"/"+key)
+      parts = url.split( '//' )
+      Mailgun.submit(:get, parts[0] + "//api:#{Mailgun.api_key}@" + parts[1])
     end
 
     # delete email

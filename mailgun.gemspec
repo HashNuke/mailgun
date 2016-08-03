@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.name          = "mailgun"
   gem.require_paths = ["lib"]
-  gem.version       = "0.7"
+  gem.version       = "0.8"
 
   gem.add_dependency(%q<rest-client>, ["~> 2.0.0.rc2"])
   gem.add_dependency(%q<multimap>, [">= 0"])
