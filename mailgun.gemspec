@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.name          = "mailgun"
   gem.require_paths = ["lib"]
-  gem.version       = "0.8"
+  gem.version       = "0.9"
 
   gem.add_development_dependency(%q<rspec>, [">= 2"])
   gem.add_development_dependency(%q<pry>, [">= 0"])
