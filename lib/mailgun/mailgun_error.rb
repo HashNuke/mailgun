@@ -39,7 +39,7 @@ module Mailgun
 
   class NotFound < ErrorBase
     def handle
-      return nil
+      nil
     end
   end
 

@@ -67,6 +67,37 @@ describe Mailgun::Base do
 
         Mailgun.submit :test_method, '/', :arg1=>"val1"
       end
+
+      context "when the client raises a 400 http error" do
+        it "should re-raise a bad request mailgun error" do
+          client_error = Mailgun::ClientError.new
+          client_error.http_code = 400
+          client_error.http_body = { "message" => "Expression is missing" }.to_json
+          expect(Mailgun::Client).to receive(:new)
+            .with('/')
+            .and_return(client_double)
+          expect(client_double).to receive(:test_method)
+            .with({:arg1=>"val1"})
+            .and_raise(client_error)
+
+          expect { Mailgun.submit :test_method, '/', :arg1=>"val1" }.to raise_exception Mailgun::BadRequest
+        end
+      end
+      context "when the client raises a 404 http error" do
+        it "should return nil instead of raising an exception" do
+          client_error = Mailgun::ClientError.new
+          client_error.http_code = 404
+          client_error.http_body = { "message" => "Not Found" }.to_json
+          expect(Mailgun::Client).to receive(:new)
+            .with('/')
+            .and_return(client_double)
+          expect(client_double).to receive(:test_method)
+            .with({:arg1=>"val1"})
+            .and_raise(client_error)
+
+          expect(Mailgun.submit :test_method, '/', :arg1=>"val1").to be_nil
+        end
+      end
     end
   end
 
