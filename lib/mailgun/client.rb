@@ -50,10 +50,8 @@ module Mailgun
     def check_for_errors(response)
       return if response.code == '200'
 
-      error = ClientError.new
-      error.http_code = response.code.to_i
-      error.http_body = response.body
-      raise error
+      raise ClientError.new(http_code: response.code.to_i,
+                            http_body: response.body)
     end
 
     def path
@@ -83,5 +81,10 @@ end
 module Mailgun
   class ClientError < StandardError
     attr_accessor :http_code, :http_body
+
+    def initialize(http_code:, http_body:)
+      @http_code = http_code
+      @http_body = http_body
+    end
   end
 end

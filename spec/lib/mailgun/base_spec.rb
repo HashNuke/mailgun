@@ -18,20 +18,20 @@ describe Mailgun::Base do
 
   it "can be instanced with the api_key as a param" do
     expect do
-      Mailgun({:api_key => "some-junk-string"})
+      Mailgun({api_key: "some-junk-string"})
     end.not_to raise_error()
   end
 
   describe "Mailgun.new" do
     it "Mailgun() method should return a new Mailgun object" do
-      mailgun = Mailgun({:api_key => "some-junk-string"})
+      mailgun = Mailgun({api_key: "some-junk-string"})
       expect(mailgun).to be_kind_of(Mailgun::Base)
     end
   end
 
   describe "resources" do
     before :each do
-      @mailgun = Mailgun({:api_key => "some-junk-string"})
+      @mailgun = Mailgun({api_key: "some-junk-string"})
     end
 
     it "Mailgun#mailboxes should return an instance of Mailgun::Mailbox" do
@@ -45,7 +45,7 @@ describe Mailgun::Base do
 
   describe "internal helper methods" do
     before :each do
-      @mailgun = Mailgun({:api_key => "some-junk-string"})
+      @mailgun = Mailgun({api_key: "some-junk-string"})
     end
 
     describe "Mailgun#base_url" do
@@ -57,15 +57,34 @@ describe Mailgun::Base do
     describe "Mailgun.submit" do
       let(:client_double) { double(Mailgun::Client) }
 
-      it "should send method and arguments to Mailgun::Client" do
-        expect(Mailgun::Client).to receive(:new)
+      before do
+        allow(Mailgun::Client).to receive(:new)
           .with('/')
           .and_return(client_double)
+      end
+
+      it "should send method and arguments to Mailgun::Client" do
         expect(client_double).to receive(:test_method)
-          .with({:arg1=>"val1"})
+          .with({arg1: "val1"})
           .and_return('{}')
 
-        Mailgun.submit :test_method, '/', :arg1=>"val1"
+        Mailgun.submit :test_method, '/', arg1: "val1"
+      end
+
+      context 'when the client throws an exception' do
+        let(:exception) { Mailgun::ClientError.new(http_code: 404, http_body: "{\n  \"message\": \"Domain not found: superstore.com\"\n}") }
+
+        before do
+          allow(client_double).to receive(:test_method)
+            .with({arg1: "val1"})
+            .and_raise(exception)
+        end
+
+        it 'uses the error handler' do
+          expect {
+            Mailgun.submit :test_method, '/', arg1: "val1"
+          }.to raise_error(Mailgun::NotFound)
+        end
       end
     end
   end
