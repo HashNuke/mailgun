@@ -82,9 +82,9 @@ module Mailgun
   class ClientError < StandardError
     attr_accessor :http_code, :http_body
 
-    def initialize(http_code:, http_body:)
-      @http_code = http_code
-      @http_body = http_body
+    def initialize(options)
+      @http_code = options[:http_code]
+      @http_body = options[:http_body]
     end
   end
 end
