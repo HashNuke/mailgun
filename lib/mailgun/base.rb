@@ -98,14 +98,16 @@ module Mailgun
       rescue JSON::ParserError
         ''
       end
+
       error = Mailgun::Error.new(
         :code => error_code || nil,
         :message => error_message || nil
       )
+
       if error.handle.kind_of? Mailgun::ErrorBase
         raise error.handle
       else
-        raise error
+        raise error.error
       end
     end
   end
