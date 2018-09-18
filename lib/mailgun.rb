@@ -1,4 +1,5 @@
 require "json"
+require "net/http"
 require "multimap/lib/multimap"
 require "multimap/lib/multiset"
 require "multimap/lib/nested_multimap"
