@@ -13,7 +13,8 @@ module Mailgun
 
     # List of currently available webhooks
     def available_ids
-      %w(bounce deliver drop spam unsubscribe click open).map(&:to_sym)
+      %w(bounce deliver drop spam unsubscribe click open).map(&:to_sym) +
+        %w(delivered opened clicked temporary_fail permanent_fail complained unsubscribed).map(&:to_sym)
     end
 
     # Returns a list of webhooks set for the specified domain
