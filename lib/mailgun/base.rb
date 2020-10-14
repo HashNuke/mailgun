@@ -96,7 +96,7 @@ module Mailgun
     begin
       JSON.parse(Client.new(url).send(method, parameters))
     rescue => e
-      error_code = e.http_code
+      error_code = e.http_code if e.respond_to?(:http_code)
       error_message = begin
         JSON(e.http_body)["message"]
       rescue JSON::ParserError
