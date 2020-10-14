@@ -18,9 +18,9 @@ module Mailgun
     end
 
     # Add domain to account
-    def create(domain, opts = {})
-      opts = {name: domain}.merge(opts)
-      Mailgun.submit :post, domain_url, opts
+    def create(domain, options = {})
+      options = {name: domain}.merge(options)
+      Mailgun.submit :post, domain_url, options
     end
 
     # Remves a domain from account
@@ -33,6 +33,11 @@ module Mailgun
     # access from Mailgun to use it
     def verify(domain)
       Mailgun.submit :put, "#{domain_url(domain)}/verify"
+    end
+
+    # Updates unsubscribe tracking settings for a domain
+    def update_unsubscribe_tracking(domain, options = {})
+      Mailgun.submit :put, "#{domain_url(domain)}/tracking/unsubscribe", options
     end
 
     private

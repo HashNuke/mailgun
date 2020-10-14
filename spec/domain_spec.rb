@@ -77,4 +77,17 @@ describe Mailgun::Domain do
       @mailgun.domains.verify(@sample[:domain])
     end
   end
+
+  describe 'update domain unsubscribe tracking' do
+    it 'should make a PUT request to update unsubscribe tracking with correct params' do
+      sample_response = { 'message' => 'Domain tracking settings have been updated', 'unsubscribe' => { 'active' => true, 'html_footer' => ' ', 'text_footer' => ' ' } }
+      verify_domain_url = "#{@mailgun.domains.send(:domain_url, @sample[:domain])}/tracking/unsubscribe"
+
+      expect(Mailgun).to receive(:submit)
+        .with(:put, verify_domain_url, { active: true, html_footer: ' ' })
+        .and_return(sample_response)
+
+      @mailgun.domains.update_unsubscribe_tracking(@sample[:domain], { active: true, html_footer: ' ' })
+    end
+  end
 end

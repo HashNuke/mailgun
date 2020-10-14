@@ -73,6 +73,10 @@ module Mailgun
       Mailgun::Log.new(self, domain)
     end
 
+    def events(domain=Mailgun.domain)
+      Mailgun::Events.new(self, domain)
+    end
+
     def lists
       @lists ||= Mailgun::MailingList.new(self)
     end
@@ -92,20 +96,22 @@ module Mailgun
     begin
       JSON.parse(Client.new(url).send(method, parameters))
     rescue => e
-      error_code = e.http_code
+      error_code = e.http_code if e.respond_to?(:http_code)
       error_message = begin
         JSON(e.http_body)["message"]
       rescue JSON::ParserError
         ''
       end
+
       error = Mailgun::Error.new(
         :code => error_code || nil,
         :message => error_message || nil
       )
+
       if error.handle.kind_of? Mailgun::ErrorBase
         raise error.handle
       else
-        raise error
+        raise error.error
       end
     end
   end
