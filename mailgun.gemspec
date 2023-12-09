@@ -15,7 +15,6 @@ Gem::Specification.new do |gem|
   gem.version       = "0.8"
 
   gem.add_dependency(%q<rest-client>, ["~> 2.0.0.rc2"])
-  gem.add_dependency(%q<multimap>, [">= 0"])
 
   gem.add_development_dependency(%q<rspec>, [">= 2"])
   gem.add_development_dependency(%q<debugger>, [">= 0"])
